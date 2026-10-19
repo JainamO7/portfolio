@@ -25,6 +25,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Jainam Kikani" }],
   creator: "Jainam Kikani",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-icon.png",
+  },
 };
 
 export const viewport: Viewport = {

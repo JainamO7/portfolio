@@ -157,8 +157,25 @@ export default function Footer() {
             color: "var(--text-muted)",
           }}
         >
-          <div>
-            Handcrafted with Next.js, TypeScript & Human-Centered Design. No AI-cliché templates.
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <span
+              style={{
+                width: "20px",
+                height: "20px",
+                borderRadius: "5px",
+                background: "linear-gradient(135deg, #FF4B26 0%, #B82808 100%)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#ffffff",
+                fontWeight: 900,
+                fontSize: "0.65rem",
+                letterSpacing: "-0.5px",
+              }}
+            >
+              JK
+            </span>
+            <span>Handcrafted with Flutter-Grade Precision &amp; Human-Centered Craft.</span>
           </div>
           <div>
             © 2026 Jainam Kikani. All rights reserved.
