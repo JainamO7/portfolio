@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Monitor, Smartphone, Tablet, ArrowUp, Code2 } from "lucide-react";
+import { Monitor, Smartphone, Tablet, ArrowUp, Mail, Phone, ExternalLink } from "lucide-react";
 import { playTactileClick } from "@/utils/sound";
 
 export default function Footer() {
   const [mounted, setMounted] = useState(false);
+  const [currentYear, setCurrentYear] = useState(2026);
   const [viewportInfo, setViewportInfo] = useState<{
     width: number;
     height: number;
@@ -20,6 +21,8 @@ export default function Footer() {
 
   useEffect(() => {
     setMounted(true);
+    setCurrentYear(new Date().getFullYear());
+
     const updateResolution = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -49,104 +52,210 @@ export default function Footer() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleFooterNav = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    playTactileClick("soft");
+    const elem = document.getElementById(id);
+    if (elem) {
+      elem.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <footer
       style={{
         borderTop: "1px solid var(--border-subtle)",
         background: "var(--bg-carbon)",
-        padding: "3rem 0 2rem 0",
+        padding: "3.5rem 0 2rem 0",
         position: "relative",
       }}
     >
       <div className="main-container">
+        {/* Top Footer Grid */}
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "1.5rem",
-            marginBottom: "2rem",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(240px, 100%), 1fr))",
+            gap: "2.5rem",
+            marginBottom: "3rem",
           }}
         >
-          {/* Brand & Tagline */}
+          {/* Brand Column */}
           <div>
             <div
               style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 800,
-                fontSize: "1.1rem",
-                color: "var(--text-pure)",
-                marginBottom: "0.25rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                marginBottom: "0.75rem",
               }}
             >
-              Jainam Kikani
+              <div
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "8px",
+                  background: "linear-gradient(135deg, #FF4B26 0%, #B82808 100%)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 900,
+                  color: "#ffffff",
+                  fontSize: "0.95rem",
+                  letterSpacing: "-0.5px",
+                }}
+              >
+                JK
+              </div>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 800,
+                  fontSize: "1.15rem",
+                  color: "var(--text-pure)",
+                }}
+              >
+                Jainam Kikani
+              </span>
             </div>
-            <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>
-              Flutter & Mobile Application Developer • Bhavnagar, Gujarat, India
+
+            <p style={{ fontSize: "0.86rem", color: "var(--text-slate)", lineHeight: 1.6, maxWidth: "320px", marginBottom: "1.2rem" }}>
+              Flutter Developer &amp; Mobile Application Developer building robust, production-ready Android &amp; iOS software from Bhavnagar, Gujarat, India.
+            </p>
+
+            {/* Live Viewport Chip */}
+            <div
+              style={{
+                background: "var(--bg-pitch)",
+                border: "1px solid var(--border-medium)",
+                borderRadius: "10px",
+                padding: "0.45rem 0.85rem",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.6rem",
+                fontFamily: "var(--font-mono)",
+              }}
+            >
+              <div style={{ color: "var(--accent-vermillion)" }}>
+                {viewportInfo.category.includes("Mobile") ? (
+                  <Smartphone size={14} />
+                ) : viewportInfo.category.includes("Tablet") ? (
+                  <Tablet size={14} />
+                ) : (
+                  <Monitor size={14} />
+                )}
+              </div>
+              <div>
+                <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#fff" }} suppressHydrationWarning>
+                  {mounted ? viewportInfo.category : "Calibrating display..."}
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Live Viewport & 4K Detector Pill */}
-          <div
-            style={{
-              background: "var(--bg-pitch)",
-              border: "1px solid var(--border-medium)",
-              borderRadius: "12px",
-              padding: "0.55rem 1rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              fontFamily: "var(--font-mono)",
-            }}
-          >
-            <div style={{ color: "var(--accent-vermillion)" }}>
-              {viewportInfo.category.includes("Mobile") ? (
-                <Smartphone size={16} />
-              ) : viewportInfo.category.includes("Tablet") ? (
-                <Tablet size={16} />
-              ) : (
-                <Monitor size={16} />
-              )}
+          {/* Quick Navigation Links */}
+          <div>
+            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--text-pure)", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "var(--font-mono)", marginBottom: "1rem" }}>
+              Navigation
             </div>
-            <div>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#fff" }} suppressHydrationWarning>
-                {mounted ? viewportInfo.category : "Calibrating display..."}
-              </div>
-              <div style={{ fontSize: "0.68rem", color: "var(--text-muted)" }} suppressHydrationWarning>
-                {mounted && viewportInfo.width > 0 ? `${viewportInfo.width}×${viewportInfo.height} px • @${viewportInfo.dpr.toFixed(1)}x DPR` : "Detecting resolution..."}
-              </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              <a href="#showroom" onClick={(e) => handleFooterNav(e, "showroom")} style={{ color: "var(--text-slate)", fontSize: "0.88rem", textDecoration: "none", transition: "color 0.2s ease" }}>
+                Interactive Showroom
+              </a>
+              <a href="#architecture" onClick={(e) => handleFooterNav(e, "architecture")} style={{ color: "var(--text-slate)", fontSize: "0.88rem", textDecoration: "none", transition: "color 0.2s ease" }}>
+                Payment &amp; WebSocket Architecture
+              </a>
+              <a href="#experience" onClick={(e) => handleFooterNav(e, "experience")} style={{ color: "var(--text-slate)", fontSize: "0.88rem", textDecoration: "none", transition: "color 0.2s ease" }}>
+                Work History &amp; Education
+              </a>
+              <a href="#skills" onClick={(e) => handleFooterNav(e, "skills")} style={{ color: "var(--text-slate)", fontSize: "0.88rem", textDecoration: "none", transition: "color 0.2s ease" }}>
+                Technical Arsenal &amp; AI Tools
+              </a>
+              <a href="#contact" onClick={(e) => handleFooterNav(e, "contact")} style={{ color: "var(--text-slate)", fontSize: "0.88rem", textDecoration: "none", transition: "color 0.2s ease" }}>
+                Direct Transmission
+              </a>
             </div>
           </div>
 
-          {/* Scroll to top */}
-          <button
-            onClick={scrollToTop}
-            title="Scroll to top"
-            style={{
-              background: "var(--bg-elevated)",
-              border: "1px solid var(--border-medium)",
-              color: "var(--text-chalk)",
-              padding: "0.6rem 0.9rem",
-              borderRadius: "10px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              fontSize: "0.82rem",
-              fontWeight: 600,
-              transition: "all 0.2s ease",
-            }}
-          >
-            <ArrowUp size={14} />
-            <span>Top</span>
-          </button>
+          {/* Profiles & Verification Links */}
+          <div>
+            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--text-pure)", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "var(--font-mono)", marginBottom: "1rem" }}>
+              Verified Profiles
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              <a
+                href="https://github.com/JainamO7"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--text-slate)", fontSize: "0.88rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <span>GitHub (JainamO7)</span>
+                <ExternalLink size={12} color="var(--text-muted)" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/jainam-kikani-678198230/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--text-slate)", fontSize: "0.88rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <span>LinkedIn (Jainam Kikani)</span>
+                <ExternalLink size={12} color="var(--text-muted)" />
+              </a>
+            
+            </div>
+          </div>
+
+          {/* Direct Communication Column */}
+          <div>
+            <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--text-pure)", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "var(--font-mono)", marginBottom: "1rem" }}>
+              Direct Contact
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <a
+                href="mailto:kikanijainam7@gmail.com"
+                style={{ color: "#fff", fontSize: "0.88rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <Mail size={15} color="var(--accent-vermillion)" />
+                <span>kikanijainam7@gmail.com</span>
+              </a>
+
+              <a
+                href="tel:+917490075875"
+                style={{ color: "#fff", fontSize: "0.88rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <Phone size={15} color="var(--accent-emerald)" />
+                <span>+91 7490075875</span>
+              </a>
+
+              <button
+                onClick={scrollToTop}
+                style={{
+                  background: "var(--bg-elevated)",
+                  border: "1px solid var(--border-medium)",
+                  color: "var(--text-chalk)",
+                  padding: "0.55rem 0.9rem",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  fontSize: "0.8rem",
+                  fontWeight: 600,
+                  marginTop: "0.4rem",
+                  width: "fit-content",
+                }}
+              >
+                <ArrowUp size={13} />
+                <span>Back to Top</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Bottom fine print */}
+        {/* Bottom Fine Print Row */}
         <div
           style={{
-            borderTop: "1px solid rgba(255, 255, 255, 0.05)",
+            borderTop: "1px solid rgba(255, 255, 255, 0.06)",
             paddingTop: "1.5rem",
             display: "flex",
             justifyContent: "space-between",
@@ -157,28 +266,11 @@ export default function Footer() {
             color: "var(--text-muted)",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <span
-              style={{
-                width: "20px",
-                height: "20px",
-                borderRadius: "5px",
-                background: "linear-gradient(135deg, #FF4B26 0%, #B82808 100%)",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#ffffff",
-                fontWeight: 900,
-                fontSize: "0.65rem",
-                letterSpacing: "-0.5px",
-              }}
-            >
-              JK
-            </span>
-            <span>Handcrafted with Flutter-Grade Precision &amp; Human-Centered Craft.</span>
-          </div>
           <div>
-            © 2026 Jainam Kikani. All rights reserved.
+            Built with Next.js, Flutter Architecture Rigor &amp; Human Craft.
+          </div>
+          <div suppressHydrationWarning>
+            © {currentYear} Jainam Kikani. All rights reserved.
           </div>
         </div>
       </div>

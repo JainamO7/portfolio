@@ -31,9 +31,9 @@ import { PROJECTS, Project } from "@/data/projectsData";
 import { playTactileClick } from "@/utils/sound";
 
 export default function DeviceShowroom() {
-  const [selectedProjectId, setSelectedProjectId] = useState<string>("bmra-medical");
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("quetal");
   const [deviceMode, setDeviceMode] = useState<"mobile" | "tablet" | "monitor">("mobile");
-  const [activeScreenshotUrl, setActiveScreenshotUrl] = useState<string>("/screenshots/bmra/bmra-doctor-list.png");
+  const [activeScreenshotUrl, setActiveScreenshotUrl] = useState<string>("/screenshots/quetal/quetal-checkout.png");
 
   const currentProject = PROJECTS.find((p) => p.id === selectedProjectId) || PROJECTS[0];
 
@@ -43,10 +43,17 @@ export default function DeviceShowroom() {
   }, [currentProject]);
 
   const handleProjectSelect = (id: string) => {
+    playTactileClick("soft");
     setSelectedProjectId(id);
+    const target = PROJECTS.find((p) => p.id === id);
+    if (target) {
+      setDeviceMode(target.defaultDevice);
+      setActiveScreenshotUrl(target.screenshotUrl || (target.gallery?.[0]?.url ?? ""));
+    }
   };
 
   const handleDeviceChange = (mode: "mobile" | "tablet" | "monitor") => {
+    playTactileClick("soft");
     setDeviceMode(mode);
   };
 
@@ -108,8 +115,7 @@ export default function DeviceShowroom() {
               margin: "0 auto",
             }}
           >
-            Switch dynamically between flagship <strong>Mobile</strong>, <strong>Tablet</strong>, and{" "}
-            <strong>4K Studio Display</strong> frames. Test live interactive simulated Flutter UI or preview real screenshots.
+            Preview production applications on their native hardware targets — flagship iPhone mobile frames, iPad Pro, and 4K Studio Displays.
           </p>
         </div>
 
@@ -190,82 +196,82 @@ export default function DeviceShowroom() {
             padding: "0.75rem 1.25rem",
           }}
         >
-          {/* Device Tabs */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {/* Native Hardware Target Display */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap" }}>
             <span
               style={{
                 fontSize: "0.78rem",
                 color: "var(--text-muted)",
                 fontFamily: "var(--font-mono)",
-                marginRight: "0.5rem",
+                marginRight: "0.4rem",
                 textTransform: "uppercase",
               }}
             >
               Hardware Target:
             </span>
 
-            <button
-              onClick={() => handleDeviceChange("mobile")}
-              style={{
-                background: deviceMode === "mobile" ? "var(--accent-vermillion)" : "var(--bg-elevated)",
-                color: deviceMode === "mobile" ? "#fff" : "var(--text-slate)",
-                border: "none",
-                borderRadius: "10px",
-                padding: "0.45rem 0.9rem",
-                fontSize: "0.85rem",
-                fontWeight: 600,
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                transition: "all 0.2s ease",
-              }}
-            >
-              <Smartphone size={15} />
-              <span>Mobile</span>
-            </button>
+            {currentProject.defaultDevice === "mobile" && (
+              <div
+                style={{
+                  background: "rgba(255, 75, 38, 0.14)",
+                  border: "1px solid var(--accent-vermillion)",
+                  color: "#fff",
+                  borderRadius: "10px",
+                  padding: "0.45rem 1rem",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  boxShadow: "0 2px 10px rgba(255, 75, 38, 0.2)",
+                }}
+              >
+                <Smartphone size={15} color="var(--accent-vermillion)" />
+                <span>Flagship Mobile (iPhone 16 Pro) • Native Android &amp; iOS</span>
+              </div>
+            )}
 
-            <button
-              onClick={() => handleDeviceChange("tablet")}
-              style={{
-                background: deviceMode === "tablet" ? "var(--accent-vermillion)" : "var(--bg-elevated)",
-                color: deviceMode === "tablet" ? "#fff" : "var(--text-slate)",
-                border: "none",
-                borderRadius: "10px",
-                padding: "0.45rem 0.9rem",
-                fontSize: "0.85rem",
-                fontWeight: 600,
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                transition: "all 0.2s ease",
-              }}
-            >
-              <Tablet size={15} />
-              <span>Tablet</span>
-            </button>
+            {currentProject.defaultDevice === "monitor" && (
+              <div
+                style={{
+                  background: "rgba(0, 102, 255, 0.14)",
+                  border: "1px solid var(--accent-cyan)",
+                  color: "#fff",
+                  borderRadius: "10px",
+                  padding: "0.45rem 1rem",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  boxShadow: "0 2px 10px rgba(0, 102, 255, 0.2)",
+                }}
+              >
+                <Monitor size={15} color="var(--accent-cyan)" />
+                <span>4K Studio Display • Native SaaS Dashboard</span>
+              </div>
+            )}
 
-            <button
-              onClick={() => handleDeviceChange("monitor")}
-              style={{
-                background: deviceMode === "monitor" ? "var(--accent-vermillion)" : "var(--bg-elevated)",
-                color: deviceMode === "monitor" ? "#fff" : "var(--text-slate)",
-                border: "none",
-                borderRadius: "10px",
-                padding: "0.45rem 0.9rem",
-                fontSize: "0.85rem",
-                fontWeight: 600,
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                transition: "all 0.2s ease",
-              }}
-            >
-              <Monitor size={15} />
-              <span>4K Studio Display</span>
-            </button>
+            {currentProject.defaultDevice === "tablet" && (
+              <div
+                style={{
+                  background: "rgba(255, 170, 29, 0.14)",
+                  border: "1px solid var(--accent-amber)",
+                  color: "#fff",
+                  borderRadius: "10px",
+                  padding: "0.45rem 1rem",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  boxShadow: "0 2px 10px rgba(255, 170, 29, 0.2)",
+                }}
+              >
+                <Tablet size={15} color="var(--accent-amber)" />
+                <span>iPad Pro • Native Tablet Platform</span>
+              </div>
+            )}
           </div>
 
           {/* Verification Badge */}
@@ -296,12 +302,7 @@ export default function DeviceShowroom() {
 
         {/* The Master Stage Grid: Device Frame on Left/Center, Project Intel on Right */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: deviceMode === "monitor" ? "1fr" : "minmax(320px, 480px) 1fr",
-            gap: "2.5rem",
-            alignItems: "start",
-          }}
+          className={`showroom-stage-grid ${deviceMode === "monitor" ? "mode-monitor" : "mode-phone"}`}
         >
           {/* Hardware Frame Stage */}
           <div
@@ -721,7 +722,7 @@ export default function DeviceShowroom() {
                 />
                 <div
                   style={{
-                    width: "320px",
+                    width: "min(320px, 90vw)",
                     height: "14px",
                     background: "linear-gradient(to right, #1f232b 0%, #2e3544 50%, #1f232b 100%)",
                     borderRadius: "6px 6px 1px 1px",
@@ -938,7 +939,13 @@ export default function DeviceShowroom() {
                   }}
                 >
                   <ExternalLink size={18} />
-                  <span>Direct Watch & Inspect on CodeCanyon</span>
+                  <span>
+                    {currentProject.liveUrl.includes("play.google.com")
+                      ? "View on Google Play Store"
+                      : currentProject.liveUrl.includes("codecanyon.net")
+                      ? "Direct Watch & Inspect on CodeCanyon"
+                      : "View Live Application"}
+                  </span>
                 </a>
               </div>
             )}
@@ -957,6 +964,114 @@ function renderSimulatedScreen(
 ) {
   // If screenshot or active gallery image is selected, render it in full fidelity
   if (activeScreenshotUrl) {
+    // When a mobile app is previewed on a tablet frame, render clean master-detail split layout
+    if (targetDevice === "tablet" && project.defaultDevice === "mobile") {
+      return (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(200px, 240px) 1fr",
+            gap: "1.25rem",
+            height: "100%",
+            alignItems: "center",
+            padding: "0.5rem",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              height: "460px",
+              width: "100%",
+              borderRadius: "14px",
+              overflow: "hidden",
+              border: "1px solid var(--border-medium)",
+              background: "#08090C",
+            }}
+          >
+            <Image
+              src={activeScreenshotUrl}
+              alt={project.title}
+              fill
+              style={{ objectFit: "contain" }}
+              sizes="240px"
+              priority
+            />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", color: "#fff" }}>
+            <div style={{ fontSize: "0.74rem", color: project.appDetails.themeColor, fontWeight: 700, fontFamily: "var(--font-mono)" }}>
+              RESPONSIVE TABLET SPLIT-VIEW
+            </div>
+            <div style={{ fontSize: "1.3rem", fontWeight: 800, color: "var(--text-pure)" }}>{project.title}</div>
+            <p style={{ fontSize: "0.85rem", color: "var(--text-slate)", lineHeight: 1.5 }}>
+              Optimized Flutter mobile architecture with reactive UI components adaptable to tablet form-factors.
+            </p>
+            <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
+              <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--accent-emerald)", marginBottom: "0.2rem" }}>
+                Multi-Screen Adaptive Layout
+              </div>
+              <div style={{ fontSize: "0.76rem", color: "var(--text-slate)" }}>
+                GetX responsive layout breakpoints scale navigation flows from handset screens to tablet displays.
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // When a mobile app is previewed on a desktop monitor frame
+    if (targetDevice === "monitor" && project.defaultDevice === "mobile") {
+      return (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(240px, 280px) 1fr",
+            gap: "2rem",
+            height: "100%",
+            alignItems: "center",
+            padding: "1rem",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              height: "500px",
+              width: "100%",
+              borderRadius: "16px",
+              overflow: "hidden",
+              border: "1px solid var(--border-medium)",
+              background: "#08090C",
+            }}
+          >
+            <Image
+              src={activeScreenshotUrl}
+              alt={project.title}
+              fill
+              style={{ objectFit: "contain" }}
+              sizes="280px"
+              priority
+            />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem", color: "#fff" }}>
+            <div style={{ fontSize: "0.78rem", color: project.appDetails.themeColor, fontWeight: 700, fontFamily: "var(--font-mono)" }}>
+              4K STUDIO DISPLAY • MOBILE EMULATION
+            </div>
+            <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--text-pure)" }}>{project.title}</div>
+            <p style={{ fontSize: "0.9rem", color: "var(--text-slate)", lineHeight: 1.6 }}>
+              Production Flutter code running with pixel-perfect fidelity across high-resolution desktop and ultrawide monitors.
+            </p>
+            <div style={{ background: "var(--bg-carbon)", padding: "1rem", borderRadius: "12px", border: "1px solid var(--border-subtle)" }}>
+              <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--accent-cyan)", marginBottom: "0.3rem" }}>
+                Cross-Platform Flutter Engine
+              </div>
+              <div style={{ fontSize: "0.8rem", color: "var(--text-slate)" }}>
+                Single Dart codebase deploying natively to mobile handsets, desktop preview harnesses, and tablets.
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div
         style={{

@@ -52,7 +52,7 @@ export default function Hero() {
               fontFamily: "var(--font-mono)",
             }}
           >
-            Flutter & Mobile Engineer • AI-Augmented
+            Flutter Developer | Mobile Application Developer
           </span>
           <span style={{ color: "var(--border-titanium)" }}>•</span>
           <span
@@ -62,7 +62,7 @@ export default function Hero() {
               fontFamily: "var(--font-mono)",
             }}
           >
-            Bhavnagar, India
+            Bhavnagar, Gujarat, India
           </span>
         </div>
 
@@ -77,7 +77,7 @@ export default function Hero() {
             letterSpacing: "-0.035em",
           }}
         >
-          Engineering tactile mobile experiences with{" "}
+          Building cross-platform mobile solutions with{" "}
           <span
             style={{
               background: "linear-gradient(135deg, #FF4B26 0%, #FFAA1D 100%)",
@@ -85,24 +85,25 @@ export default function Hero() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            architectural rigor
+            Flutter &amp; Dart
           </span>{" "}
-          and real-world speed.
+          for Android and iOS.
         </h1>
 
-        {/* Human Narrative Subtitle */}
+        {/* Human Narrative Subtitle - Directly from Resume Professional Summary */}
         <p
           style={{
-            fontSize: "clamp(1.05rem, 1.4vw, 1.35rem)",
+            fontSize: "clamp(1.02rem, 1.35vw, 1.25rem)",
             color: "var(--text-slate)",
-            maxWidth: "840px",
-            lineHeight: 1.6,
+            maxWidth: "880px",
+            lineHeight: 1.65,
             marginBottom: "2.5rem",
           }}
         >
-          Hi, I&apos;m <strong>Jainam Kikani</strong>. I build and ship production Android & iOS applications across
-          media streaming, FinTech payments (Stripe & NMI), and real-time WebSockets. Supercharged by modern AI-augmented workflows
-          (Claude Code, Google Antigravity & Codex) for high-velocity craft.
+          Hi, I&apos;m <strong>Jainam Kikani</strong>. Flutter Developer experienced in building and maintaining
+          cross-platform mobile applications for Android and iOS across education platforms, video and music player applications,
+          payment integrations (Stripe, NMI), dealer management systems, appointment management, and IoT-connected applications.
+          Skilled in Flutter, Dart, REST API, GetX, MobX, MVVM architecture, SQLite, Firebase, WebSockets, and AI-assisted development tools (OpenAI Codex, Claude Code, Google Antigravity).
         </p>
 
         {/* Action Buttons */}
@@ -120,9 +121,9 @@ export default function Hero() {
             <span>Launch Device Showroom</span>
           </a>
 
-          <a href="#architecture" onClick={onCtaClick} className="btn-secondary">
+          <a href="#experience" onClick={onCtaClick} className="btn-secondary">
             <ShieldCheck size={18} color="var(--accent-amber)" />
-            <span>View Payment & WebSocket Systems</span>
+            <span>View Experience &amp; Projects</span>
           </a>
         </div>
 
@@ -130,7 +131,7 @@ export default function Hero() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))",
             gap: "1.25rem",
           }}
         >
@@ -165,10 +166,10 @@ export default function Hero() {
                 lineHeight: 1.1,
               }}
             >
-              8+ Apps
+              8+ Projects
             </div>
             <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
-              Shipped across Google Play & iOS (Media, FinTech, EdTech, IoT)
+              Android &amp; iOS mobile apps across media, payments, SaaS, and EdTech
             </div>
           </div>
 
@@ -191,7 +192,7 @@ export default function Hero() {
             >
               <Zap size={18} />
               <span style={{ fontSize: "0.8rem", fontWeight: 600, fontFamily: "var(--font-mono)" }}>
-                PAYMENTS & RAILS
+                PAYMENTS
               </span>
             </div>
             <div
@@ -203,10 +204,10 @@ export default function Hero() {
                 lineHeight: 1.1,
               }}
             >
-              Stripe & NMI
+              Stripe &amp; NMI
             </div>
             <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
-              PCI-compliant tokenized checkouts, subscriptions & dealer invoicing
+              Payment gateway integrations for mobile checkouts and dealer SaaS
             </div>
           </div>
 
@@ -229,7 +230,7 @@ export default function Hero() {
             >
               <Radio size={18} />
               <span style={{ fontSize: "0.8rem", fontWeight: 600, fontFamily: "var(--font-mono)" }}>
-                REAL-TIME SYNC
+                APIs &amp; REAL-TIME
               </span>
             </div>
             <div
@@ -241,10 +242,10 @@ export default function Hero() {
                 lineHeight: 1.1,
               }}
             >
-              WebSockets
+              WebSockets &amp; REST
             </div>
             <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
-              Sub-50ms duplex streaming for live telemetry, recharge & order state
+              HTTP, REST API integration, JSON parsing &amp; real-time duplex WebSockets
             </div>
           </div>
 
@@ -267,7 +268,7 @@ export default function Hero() {
             >
               <Sparkles size={18} />
               <span style={{ fontSize: "0.8rem", fontWeight: 600, fontFamily: "var(--font-mono)" }}>
-                STATE & SPEED
+                STATE &amp; ARCHITECTURE
               </span>
             </div>
             <div
@@ -279,10 +280,10 @@ export default function Hero() {
                 lineHeight: 1.1,
               }}
             >
-              GetX & MobX
+              GetX &amp; MobX
             </div>
             <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
-              60fps reactive rendering, zero memory leaks, offline SQLite caching
+              MVVM software architecture, SQLite local storage &amp; Firebase
             </div>
           </div>
         </div>

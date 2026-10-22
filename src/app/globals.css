@@ -54,6 +54,9 @@ html {
   scroll-behavior: smooth;
   color-scheme: dark;
   background-color: var(--bg-pitch);
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
 body {
@@ -63,6 +66,8 @@ body {
   font-size: clamp(14px, 0.95vw + 0.1rem, 18px);
   line-height: 1.6;
   overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
@@ -266,3 +271,30 @@ h1, h2, h3, h4, .display-font {
   align-items: center;
   width: 100%;
 }
+
+/* Showroom Stage Grid Responsive Layout */
+.showroom-stage-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .showroom-stage-grid.mode-phone {
+    grid-template-columns: minmax(300px, 460px) 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* Global Mobile Overflow Safeguards */
+img, video, canvas, svg {
+  max-width: 100%;
+}
+
+pre, code {
+  max-width: 100%;
+  overflow-x: auto;
+}
+

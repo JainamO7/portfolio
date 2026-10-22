@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Cpu, Smartphone, Layers, CreditCard, Database, Terminal, Check, Bot, Sparkles } from "lucide-react";
+import { Cpu, Smartphone, Layers, CreditCard, Database, Terminal, Check, Bot, Sparkles, Wrench } from "lucide-react";
 import { TECHNICAL_SKILLS } from "@/data/projectsData";
 
 export default function SkillsSection() {
@@ -40,7 +40,7 @@ export default function SkillsSection() {
                 fontFamily: "var(--font-mono)",
               }}
             >
-              Technical Arsenal
+              Technical Skills
             </span>
           </div>
 
@@ -52,7 +52,7 @@ export default function SkillsSection() {
               marginBottom: "1rem",
             }}
           >
-            Technologies dialed for speed & reliability.
+            Skills, Tools &amp; Architecture
           </h2>
 
           <p
@@ -63,8 +63,7 @@ export default function SkillsSection() {
               margin: "0 auto",
             }}
           >
-            A cohesive stack built around high-throughput cross-platform mobile frameworks, native platform bindings,
-            and AI-assisted developer velocity.
+            Directly from verified professional experience across cross-platform mobile development, API integrations, and AI-assisted workflows.
           </p>
         </div>
 
@@ -72,7 +71,7 @@ export default function SkillsSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
             gap: "1.5rem",
           }}
         >
@@ -126,7 +125,7 @@ export default function SkillsSection() {
                     }}
                   >
                     <Sparkles size={11} />
-                    <span>AI-Accelerated</span>
+                    <span>AI-Assisted</span>
                   </span>
                 )}
               </div>
@@ -170,58 +169,6 @@ export default function SkillsSection() {
               </div>
             </div>
           ))}
-
-          {/* Additional Languages Card */}
-          <div
-            className="glass-panel"
-            style={{
-              padding: "1.75rem",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
-              <div
-                style={{
-                  width: "38px",
-                  height: "38px",
-                  borderRadius: "10px",
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border-medium)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--accent-amber)",
-                }}
-              >
-                <Terminal size={18} />
-              </div>
-              <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text-pure)" }}>
-                Complementary Languages
-              </h3>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", flex: 1 }}>
-              {[
-                { lang: "Python", purpose: "Automation scripts, data pipelines" },
-                { lang: "PHP", purpose: "Legacy backend API integrations" },
-                { lang: "Java", purpose: "Native Android services & SDK bridges" },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  style={{
-                    padding: "0.55rem 0.75rem",
-                    background: "var(--bg-carbon)",
-                    border: "1px solid var(--border-subtle)",
-                    borderRadius: "8px",
-                  }}
-                >
-                  <div style={{ fontSize: "0.86rem", fontWeight: 600, color: "#fff" }}>{item.lang}</div>
-                  <div style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>{item.purpose}</div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -229,10 +176,12 @@ export default function SkillsSection() {
 }
 
 function getSkillIcon(category: string) {
-  if (category.includes("AI") || category.includes("Agentic")) return <Bot size={18} />;
+  if (category.includes("AI")) return <Bot size={18} />;
   if (category.includes("Mobile")) return <Smartphone size={18} />;
-  if (category.includes("State")) return <Layers size={18} />;
-  if (category.includes("FinTech") || category.includes("Integration")) return <CreditCard size={18} />;
-  if (category.includes("Storage") || category.includes("Data")) return <Database size={18} />;
+  if (category.includes("Languages")) return <Terminal size={18} />;
+  if (category.includes("State") || category.includes("Architecture")) return <Layers size={18} />;
+  if (category.includes("API") || category.includes("Integrations")) return <CreditCard size={18} />;
+  if (category.includes("Storage") || category.includes("Database")) return <Database size={18} />;
+  if (category.includes("Practices") || category.includes("Tools")) return <Wrench size={18} />;
   return <Cpu size={18} />;
 }

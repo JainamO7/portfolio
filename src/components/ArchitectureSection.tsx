@@ -180,7 +180,7 @@ export default function ArchitectureSection() {
           }}
         >
           {activeTab === "payments" && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2.5rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2.5rem" }}>
               <div>
                 <div style={{ fontSize: "0.78rem", color: "var(--accent-vermillion)", fontWeight: 700, fontFamily: "var(--font-mono)", marginBottom: "0.4rem" }}>
                   DUAL PAYMENT GATEWAY INFRASTRUCTURE
@@ -189,9 +189,8 @@ export default function ArchitectureSection() {
                   PCI-Compliant Stripe & NMI Integration
                 </h3>
                 <p style={{ color: "var(--text-slate)", marginBottom: "1.2rem", lineHeight: 1.6 }}>
-                  In the <strong>PrepaidIQ Dealer SaaS</strong> and <strong>Qué Tal Móvil</strong> apps, I engineered dual payment rails.
-                  Stripe handles digital consumer checkout with Apple Pay & Google Pay, while NMI handles high-volume US telecommunication
-                  dealer transactions and wholesale invoices.
+                  In the <strong>Dealer Management SaaS</strong> and <strong>Quetal</strong> apps, I engineered payment gateway integrations.
+                  Stripe handles digital card checkout, while NMI handles high-volume dealer transactions and recharge operations.
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -258,7 +257,7 @@ class NMIService implements PaymentService {
           )}
 
           {activeTab === "websockets" && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2.5rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2.5rem" }}>
               <div>
                 <div style={{ fontSize: "0.78rem", color: "var(--accent-amber)", fontWeight: 700, fontFamily: "var(--font-mono)", marginBottom: "0.4rem" }}>
                   LOW-LATENCY DUPLEX COMMUNICATION
@@ -267,8 +266,8 @@ class NMIService implements PaymentService {
                   Resilient WebSocket Stream Bus
                 </h3>
                 <p style={{ color: "var(--text-slate)", marginBottom: "1.2rem", lineHeight: 1.6 }}>
-                  Powering live carrier recharge status updates in <strong>PrepaidIQ Dealer SaaS</strong> and real-time telemetry in the{" "}
-                  <strong>Smart WiFi Alarm</strong> companion app.
+                  Powering live carrier recharge status updates in <strong>Dealer Management SaaS</strong> and real-time telemetry in the{" "}
+                  <strong>Smart IoT Alarm</strong> companion app.
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -325,7 +324,7 @@ class NMIService implements PaymentService {
           )}
 
           {activeTab === "state" && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2.5rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2.5rem" }}>
               <div>
                 <div style={{ fontSize: "0.78rem", color: "var(--accent-emerald)", fontWeight: 700, fontFamily: "var(--font-mono)", marginBottom: "0.4rem" }}>
                   PREDICTABLE & CLEAN SCALABILITY
@@ -386,7 +385,7 @@ class NMIService implements PaymentService {
           )}
 
           {activeTab === "media" && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2.5rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2.5rem" }}>
               <div>
                 <div style={{ fontSize: "0.78rem", color: "var(--accent-cyan)", fontWeight: 700, fontFamily: "var(--font-mono)", marginBottom: "0.4rem" }}>
                   BACKGROUND SERVICES & NATIVE BRIDGING

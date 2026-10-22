@@ -1,14 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import { Mail, Phone, MapPin, Copy, Check, Send, Sparkles, ExternalLink } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { Mail, Phone, MapPin, Copy, Check, Send, Sparkles, AlertCircle, CheckCircle2, Loader2, ArrowRight } from "lucide-react";
 import { playTactileClick } from "@/utils/sound";
 
 export default function ContactSection() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  // Email verification states
+  const [emailStatus, setEmailStatus] = useState<"idle" | "checking" | "valid" | "invalid" | "typo">("idle");
+  const [emailFeedback, setEmailFeedback] = useState<string>("");
+  const [suggestedEmail, setSuggestedEmail] = useState<string>("");
+  const [submitError, setSubmitError] = useState<string>("");
+
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
 
   const email = "kikanijainam7@gmail.com";
   const phone = "+91 7490075875";
@@ -27,10 +36,124 @@ export default function ContactSection() {
     setTimeout(() => setCopiedPhone(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Perform free domain & typo verification
+  const verifyEmail = async (emailToVerify: string): Promise<boolean> => {
+    const trimmed = emailToVerify.trim();
+    if (!trimmed || !trimmed.includes("@")) {
+      setEmailStatus("idle");
+      setEmailFeedback("");
+      setSuggestedEmail("");
+      return false;
+    }
+
+    setEmailStatus("checking");
+    setEmailFeedback("Verifying mail server & domain...");
+
+    try {
+      const res = await fetch("/api/verify-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmed }),
+      });
+      const data = await res.json();
+
+      if (data.isTypo && data.suggestion) {
+        setEmailStatus("typo");
+        setEmailFeedback(data.message || `Did you mean @${data.suggestion.split("@")[1]}?`);
+        setSuggestedEmail(data.suggestion);
+        return false;
+      } else if (data.valid) {
+        setEmailStatus("valid");
+        setEmailFeedback(data.message || "Domain verified and active.");
+        setSuggestedEmail("");
+        return true;
+      } else {
+        setEmailStatus("invalid");
+        setEmailFeedback(data.message || "Invalid email address or domain.");
+        setSuggestedEmail("");
+        return false;
+      }
+    } catch {
+      setEmailStatus("valid");
+      setEmailFeedback("Format valid.");
+      return true;
+    }
+  };
+
+  const handleEmailChange = (val: string) => {
+    setFormData({ ...formData, email: val });
+
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+
+    if (!val || val.length < 5 || !val.includes("@")) {
+      setEmailStatus("idle");
+      setEmailFeedback("");
+      setSuggestedEmail("");
+      return;
+    }
+
+    // Debounce DNS lookup by 600ms
+    debounceTimer.current = setTimeout(() => {
+      verifyEmail(val);
+    }, 600);
+  };
+
+  const applySuggestedEmail = () => {
+    if (suggestedEmail) {
+      playTactileClick("pop");
+      setFormData({ ...formData, email: suggestedEmail });
+      verifyEmail(suggestedEmail);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     playTactileClick("pop");
-    setFormSubmitted(true);
+    setSubmitError("");
+
+    setSubmitting(true);
+    const isValid = await verifyEmail(formData.email);
+
+    if (!isValid) {
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "2335c680-a957-48d1-8a3b-6b77f89cb79b",
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+          subject: `Portfolio Message from ${formData.name.trim()}`,
+          from_name: "Jainam Kikani Portfolio",
+        }),
+      });
+
+      const result = await response.json();
+      setSubmitting(false);
+
+      if (result.success) {
+        setFormSubmitted(true);
+      } else {
+        setSubmitError(result.message || "Could not deliver email. Please try again or use direct email above.");
+      }
+    } catch {
+      setSubmitting(false);
+      // Resilient fallback: open mail client with message drafted
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(
+        `Portfolio Inquiry from ${formData.name}`
+      )}&body=${encodeURIComponent(
+        `Hi Jainam,\n\n${formData.message}\n\nFrom: ${formData.name}\nEmail: ${formData.email}`
+      )}`;
+      setFormSubmitted(true);
+    }
   };
 
   return (
@@ -99,7 +222,7 @@ export default function ContactSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(290px, 100%), 1fr))",
             gap: "2.5rem",
             maxWidth: "1060px",
             margin: "0 auto",
@@ -240,12 +363,31 @@ export default function ContactSection() {
                     <div style={{ fontSize: "0.74rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
                       PHONE / WHATSAPP
                     </div>
-                    <a
-                      href={`tel:${phone}`}
-                      style={{ fontSize: "0.95rem", fontWeight: 600, color: "#fff", textDecoration: "none" }}
-                    >
-                      {phone}
-                    </a>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+                      <a
+                        href={`tel:${phone}`}
+                        style={{ fontSize: "0.95rem", fontWeight: 600, color: "#fff", textDecoration: "none" }}
+                      >
+                        {phone}
+                      </a>
+                      <a
+                        href="https://wa.me/917490075875"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          fontSize: "0.74rem",
+                          color: "var(--accent-emerald)",
+                          textDecoration: "none",
+                          fontFamily: "var(--font-mono)",
+                          background: "rgba(0, 214, 114, 0.1)",
+                          padding: "0.15rem 0.45rem",
+                          borderRadius: "4px",
+                          border: "1px solid rgba(0, 214, 114, 0.25)",
+                        }}
+                      >
+                        WhatsApp
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -313,7 +455,7 @@ export default function ContactSection() {
             {/* Social Links */}
             <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
               <a
-                href="https://github.com/Jainam07"
+                href="https://github.com/JainamO7"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary"
@@ -322,11 +464,11 @@ export default function ContactSection() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                   <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
                 </svg>
-                <span>GitHub (Jainam07)</span>
+                <span>GitHub (JainamO7)</span>
               </a>
 
               <a
-                href="https://www.linkedin.com/in/jainam-kikani"
+                href="https://www.linkedin.com/in/jainam-kikani-678198230/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary"
@@ -380,11 +522,23 @@ export default function ContactSection() {
                   <Check size={24} />
                 </div>
                 <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#fff", marginBottom: "0.4rem" }}>
-                  Message Transmitted!
+                  Message Sent Successfully!
                 </div>
-                <div style={{ fontSize: "0.86rem", color: "var(--text-slate)" }}>
-                  Thank you! I will review your message and reply to {formData.email || "you"} shortly.
+                <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", lineHeight: 1.6, marginBottom: "1.2rem" }}>
+                  Thank you, <strong style={{ color: "#fff" }}>{formData.name}</strong>! Your message has been received. I will review it and reply to <strong style={{ color: "var(--accent-emerald)" }}>{formData.email}</strong> shortly.
                 </div>
+                <button
+                  onClick={() => {
+                    setFormSubmitted(false);
+                    setFormData({ name: "", email: "", message: "" });
+                    setEmailStatus("idle");
+                    setSubmitError("");
+                  }}
+                  className="btn-secondary"
+                  style={{ fontSize: "0.84rem", margin: "0 auto" }}
+                >
+                  Send Another Message
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -395,7 +549,7 @@ export default function ContactSection() {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Sarah Connor"
+                    placeholder="Your Name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     style={{
@@ -412,26 +566,116 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text-chalk)", display: "block", marginBottom: "0.4rem" }}>
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="sarah@company.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    style={{
-                      width: "100%",
-                      background: "var(--bg-carbon)",
-                      border: "1px solid var(--border-medium)",
-                      borderRadius: "10px",
-                      padding: "0.75rem 1rem",
-                      color: "#fff",
-                      fontSize: "0.9rem",
-                      outline: "none",
-                    }}
-                  />
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+                    <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text-chalk)" }}>
+                      Email Address
+                    </label>
+                    <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                      Live MX &amp; Typo Verification
+                    </span>
+                  </div>
+
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type="email"
+                      required
+                      placeholder="your.email@domain.com"
+                      value={formData.email}
+                      onChange={(e) => handleEmailChange(e.target.value)}
+                      onBlur={() => formData.email && verifyEmail(formData.email)}
+                      style={{
+                        width: "100%",
+                        background: "var(--bg-carbon)",
+                        border:
+                          emailStatus === "valid"
+                            ? "1px solid var(--accent-emerald)"
+                            : emailStatus === "invalid"
+                            ? "1px solid #FF3366"
+                            : emailStatus === "typo"
+                            ? "1px solid var(--accent-amber)"
+                            : "1px solid var(--border-medium)",
+                        borderRadius: "10px",
+                        padding: "0.75rem 2.5rem 0.75rem 1rem",
+                        color: "#fff",
+                        fontSize: "0.9rem",
+                        outline: "none",
+                        transition: "border-color 0.2s ease",
+                      }}
+                    />
+
+                    {/* Status Icon */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        right: "0.9rem",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        pointerEvents: "none",
+                      }}
+                    >
+                      {emailStatus === "checking" && <Loader2 size={16} className="animate-spin" color="var(--accent-cyan)" />}
+                      {emailStatus === "valid" && <CheckCircle2 size={16} color="var(--accent-emerald)" />}
+                      {emailStatus === "invalid" && <AlertCircle size={16} color="#FF3366" />}
+                      {emailStatus === "typo" && <AlertCircle size={16} color="var(--accent-amber)" />}
+                    </div>
+                  </div>
+
+                  {/* Typo Auto-Correction Prompt */}
+                  {emailStatus === "typo" && (
+                    <div
+                      style={{
+                        marginTop: "0.45rem",
+                        background: "rgba(255, 170, 29, 0.12)",
+                        border: "1px solid rgba(255, 170, 29, 0.35)",
+                        borderRadius: "8px",
+                        padding: "0.45rem 0.75rem",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        fontSize: "0.78rem",
+                        color: "var(--accent-amber)",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                        <span>💡 {emailFeedback}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={applySuggestedEmail}
+                        style={{
+                          background: "var(--accent-amber)",
+                          color: "#08090C",
+                          border: "none",
+                          borderRadius: "6px",
+                          padding: "0.2rem 0.55rem",
+                          fontSize: "0.72rem",
+                          fontWeight: 700,
+                          cursor: "pointer",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "0.25rem",
+                        }}
+                      >
+                        <span>Fix to {suggestedEmail}</span>
+                        <ArrowRight size={11} />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Feedback Message */}
+                  {emailStatus === "invalid" && (
+                    <div style={{ fontSize: "0.76rem", color: "#FF3366", marginTop: "0.35rem", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                      <AlertCircle size={13} />
+                      <span>{emailFeedback}</span>
+                    </div>
+                  )}
+
+                  {emailStatus === "valid" && (
+                    <div style={{ fontSize: "0.76rem", color: "var(--accent-emerald)", marginTop: "0.35rem", display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                      <CheckCircle2 size={13} />
+                      <span>{emailFeedback}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -441,7 +685,7 @@ export default function ContactSection() {
                   <textarea
                     rows={4}
                     required
-                    placeholder="We're looking to build a high-performance cross-platform Flutter application with payment integration..."
+                    placeholder="Tell me about your project, timeline, or inquiry..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     style={{
@@ -458,9 +702,35 @@ export default function ContactSection() {
                   />
                 </div>
 
-                <button type="submit" className="btn-primary" style={{ justifyContent: "center", marginTop: "0.5rem" }}>
-                  <Send size={16} />
-                  <span>Transmit Direct Message</span>
+                {submitError && (
+                  <div style={{ background: "rgba(255, 51, 102, 0.12)", border: "1px solid rgba(255, 51, 102, 0.35)", borderRadius: "8px", padding: "0.6rem 0.85rem", fontSize: "0.82rem", color: "#FF3366", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <AlertCircle size={15} />
+                    <span>{submitError}</span>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={submitting || emailStatus === "invalid" || emailStatus === "typo"}
+                  className="btn-primary"
+                  style={{
+                    justifyContent: "center",
+                    marginTop: "0.5rem",
+                    opacity: submitting || emailStatus === "invalid" || emailStatus === "typo" ? 0.6 : 1,
+                    cursor: submitting || emailStatus === "invalid" || emailStatus === "typo" ? "not-allowed" : "pointer",
+                  }}
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      <span>Verifying &amp; Transmitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      <span>Transmit Direct Message</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}

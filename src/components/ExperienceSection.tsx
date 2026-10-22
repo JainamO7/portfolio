@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Briefcase, GraduationCap, Calendar, MapPin, CheckCircle2, Award } from "lucide-react";
+import { Briefcase, GraduationCap, Calendar, CheckCircle2, Award, Wrench, FolderGit2 } from "lucide-react";
 import { WORK_EXPERIENCE, EDUCATION } from "@/data/projectsData";
 
 export default function ExperienceSection() {
@@ -52,7 +52,7 @@ export default function ExperienceSection() {
               marginBottom: "1rem",
             }}
           >
-            Shipping software that touches real users.
+            Professional Experience &amp; Education
           </h2>
 
           <p
@@ -63,7 +63,7 @@ export default function ExperienceSection() {
               margin: "0 auto",
             }}
           >
-            My engineering trajectory across full-lifecycle mobile app development, payment gateways, and EdTech platforms.
+            Proven cross-platform mobile development track record for Android &amp; iOS, verified by published applications on Google Play and commercial deployments.
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export default function ExperienceSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))",
             gap: "2.5rem",
           }}
         >
@@ -138,6 +138,33 @@ export default function ExperienceSection() {
                     ))}
                   </ul>
 
+                  {/* Key Projects list */}
+                  {exp.keyProjects && exp.keyProjects.length > 0 && (
+                    <div style={{ marginBottom: "1.1rem" }}>
+                      <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--text-muted)", fontFamily: "var(--font-mono)", marginBottom: "0.4rem", textTransform: "uppercase" }}>
+                        Key Projects
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                        {exp.keyProjects.map((p, i) => (
+                          <span
+                            key={i}
+                            style={{
+                              background: "rgba(255, 75, 38, 0.08)",
+                              border: "1px solid rgba(255, 75, 38, 0.2)",
+                              padding: "0.2rem 0.55rem",
+                              borderRadius: "6px",
+                              fontSize: "0.75rem",
+                              color: "var(--accent-vermillion)",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {p}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
                     {exp.technologies.map((tech, i) => (
                       <span
@@ -161,7 +188,7 @@ export default function ExperienceSection() {
             </div>
           </div>
 
-          {/* Education & Academic Rigor */}
+          {/* Education & Practices */}
           <div>
             <h3
               style={{
@@ -195,8 +222,8 @@ export default function ExperienceSection() {
                         {edu.institution}
                       </div>
                       {edu.college && (
-                        <div style={{ fontSize: "0.84rem", color: "var(--text-slate)", marginTop: "0.15rem" }}>
-                          {edu.college}
+                        <div style={{ fontSize: "0.85rem", color: "var(--text-slate)", marginTop: "0.25rem" }}>
+                          College: <span style={{ color: "var(--text-chalk)", fontWeight: 600 }}>{edu.college}</span>
                         </div>
                       )}
                     </div>
@@ -216,17 +243,13 @@ export default function ExperienceSection() {
                       }}
                     >
                       <Award size={13} />
-                      <span>Class of {edu.year}</span>
+                      <span>{edu.passingYearText}</span>
                     </div>
                   </div>
-
-                  <p style={{ fontSize: "0.86rem", color: "var(--text-slate)", marginTop: "0.85rem", lineHeight: 1.55 }}>
-                    Focus: {edu.highlights}
-                  </p>
                 </div>
               ))}
 
-              {/* Engineering Principles Card */}
+              {/* Development Practices & AI Tools Card */}
               <div
                 style={{
                   background: "linear-gradient(135deg, rgba(255, 75, 38, 0.08) 0%, rgba(255, 170, 29, 0.04) 100%)",
@@ -235,15 +258,36 @@ export default function ExperienceSection() {
                   padding: "1.5rem",
                 }}
               >
-                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--accent-vermillion)", fontFamily: "var(--font-mono)", marginBottom: "0.4rem" }}>
-                  CORE CORE PRINCIPLE
+                <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--accent-vermillion)", fontFamily: "var(--font-mono)", marginBottom: "0.4rem", textTransform: "uppercase" }}>
+                  AI-Assisted Development &amp; Practices
                 </div>
-                <div style={{ fontSize: "1rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem" }}>
-                  Fast Execution without Architectural Debt
+                <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", marginBottom: "0.6rem" }}>
+                  Modern Development Tools &amp; Practices
                 </div>
-                <div style={{ fontSize: "0.85rem", color: "var(--text-slate)", lineHeight: 1.5 }}>
-                  Utilizing modern AI-assisted engineering tools (Claude Code, Google Antigravity, OpenAI Codex) to accelerate
-                  boilerplate while dedicating human focus to low-level stability, concurrency, and pixel-perfect touch physics.
+                <div style={{ fontSize: "0.85rem", color: "var(--text-slate)", lineHeight: 1.6, marginBottom: "0.75rem" }}>
+                  Worked with modern AI-assisted development tools to support coding, debugging, and development workflows:
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.9rem" }}>
+                  {["OpenAI Codex", "Claude Code", "Google Antigravity"].map((tool, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        background: "rgba(0, 200, 229, 0.1)",
+                        border: "1px solid rgba(0, 200, 229, 0.3)",
+                        color: "var(--accent-cyan)",
+                        borderRadius: "6px",
+                        padding: "0.2rem 0.55rem",
+                        fontSize: "0.76rem",
+                        fontFamily: "var(--font-mono)",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+                <div style={{ fontSize: "0.82rem", color: "var(--text-muted)", lineHeight: 1.5 }}>
+                  <strong style={{ color: "var(--text-chalk)" }}>Core Practices:</strong> Git, Debugging, Troubleshooting, Application Maintenance, Performance Optimization, Version Control.
                 </div>
               </div>
             </div>
