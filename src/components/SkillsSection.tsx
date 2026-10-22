@@ -150,9 +150,12 @@ export default function SkillsSection() {
                         borderRadius: "8px",
                       }}
                     >
-                      <span style={{ fontSize: "0.86rem", fontWeight: 600, color: skill.highlighted ? "#fff" : "var(--text-chalk)" }}>
-                        {skill.name}
-                      </span>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <Check size={13} color={skill.highlighted ? activeColor : "var(--accent-emerald)"} style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: "0.86rem", fontWeight: 600, color: skill.highlighted ? "#fff" : "var(--text-chalk)" }}>
+                          {skill.name}
+                        </span>
+                      </div>
                       <span
                         style={{
                           fontSize: "0.72rem",

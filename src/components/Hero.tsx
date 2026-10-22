@@ -1,7 +1,17 @@
 "use client";
 
 import React from "react";
-import { ArrowDown, Smartphone, ShieldCheck, Zap, Radio, Sparkles } from "lucide-react";
+import {
+  Smartphone,
+  ShieldCheck,
+  CreditCard,
+  Radio,
+  Layers,
+  MapPin,
+  Mail,
+  Sparkles,
+} from "lucide-react";
+import { Github, Linkedin } from "@/components/icons/BrandIcons";
 import { playTactileClick } from "@/utils/sound";
 
 export default function Hero() {
@@ -30,6 +40,7 @@ export default function Hero() {
             padding: "0.4rem 1.1rem",
             marginBottom: "1.8rem",
             boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+            flexWrap: "wrap",
           }}
         >
           <span
@@ -60,9 +71,13 @@ export default function Hero() {
               fontSize: "0.82rem",
               color: "var(--text-slate)",
               fontFamily: "var(--font-mono)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.35rem",
             }}
           >
-            Bhavnagar, Gujarat, India
+            <MapPin size={12} color="var(--accent-amber)" />
+            <span>Bhavnagar, Gujarat, India</span>
           </span>
         </div>
 
@@ -111,7 +126,7 @@ export default function Hero() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "1rem",
+            gap: "0.85rem",
             flexWrap: "wrap",
             marginBottom: "4.5rem",
           }}
@@ -124,6 +139,61 @@ export default function Hero() {
           <a href="#experience" onClick={onCtaClick} className="btn-secondary">
             <ShieldCheck size={18} color="var(--accent-amber)" />
             <span>View Experience &amp; Projects</span>
+          </a>
+
+          {/* Quick Verified Profile Pills */}
+          <a
+            href="https://github.com/JainamO7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary"
+            style={{
+              padding: "0.6rem 0.95rem",
+              fontSize: "0.86rem",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.45rem",
+            }}
+            title="GitHub (JainamO7)"
+          >
+            <Github size={16} />
+            <span>GitHub</span>
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/jainam-kikani-678198230/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary"
+            style={{
+              padding: "0.6rem 0.95rem",
+              fontSize: "0.86rem",
+              color: "#0A66C2",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.45rem",
+            }}
+            title="LinkedIn Profile"
+          >
+            <Linkedin size={16} />
+            <span>LinkedIn</span>
+          </a>
+
+          <a
+            href="#contact"
+            onClick={onCtaClick}
+            className="btn-secondary"
+            style={{
+              padding: "0.6rem 0.95rem",
+              fontSize: "0.86rem",
+              color: "var(--accent-vermillion)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.45rem",
+            }}
+          >
+            <Mail size={16} />
+            <span>Contact</span>
           </a>
         </div>
 
@@ -147,19 +217,32 @@ export default function Hero() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.6rem",
+                gap: "0.65rem",
                 color: "var(--accent-vermillion)",
-                marginBottom: "0.5rem",
+                marginBottom: "0.6rem",
               }}
             >
-              <Smartphone size={18} />
-              <span style={{ fontSize: "0.8rem", fontWeight: 600, fontFamily: "var(--font-mono)" }}>
+              <div
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "8px",
+                  background: "rgba(255, 75, 38, 0.14)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <Smartphone size={16} />
+              </div>
+              <span style={{ fontSize: "0.78rem", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                 CROSS-PLATFORM
               </span>
             </div>
             <div
               style={{
-                fontSize: "2.4rem",
+                fontSize: "2.3rem",
                 fontWeight: 800,
                 color: "var(--text-pure)",
                 fontFamily: "var(--font-display)",
@@ -168,7 +251,7 @@ export default function Hero() {
             >
               8+ Projects
             </div>
-            <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
+            <div style={{ fontSize: "0.86rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
               Android &amp; iOS mobile apps across media, payments, SaaS, and EdTech
             </div>
           </div>
@@ -185,19 +268,32 @@ export default function Hero() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.6rem",
+                gap: "0.65rem",
                 color: "var(--accent-emerald)",
-                marginBottom: "0.5rem",
+                marginBottom: "0.6rem",
               }}
             >
-              <Zap size={18} />
-              <span style={{ fontSize: "0.8rem", fontWeight: 600, fontFamily: "var(--font-mono)" }}>
+              <div
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "8px",
+                  background: "rgba(0, 214, 114, 0.14)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <CreditCard size={16} />
+              </div>
+              <span style={{ fontSize: "0.78rem", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                 PAYMENTS
               </span>
             </div>
             <div
               style={{
-                fontSize: "2.4rem",
+                fontSize: "2.3rem",
                 fontWeight: 800,
                 color: "var(--text-pure)",
                 fontFamily: "var(--font-display)",
@@ -206,7 +302,7 @@ export default function Hero() {
             >
               Stripe &amp; NMI
             </div>
-            <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
+            <div style={{ fontSize: "0.86rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
               Payment gateway integrations for mobile checkouts and dealer SaaS
             </div>
           </div>
@@ -223,19 +319,32 @@ export default function Hero() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.6rem",
+                gap: "0.65rem",
                 color: "var(--accent-amber)",
-                marginBottom: "0.5rem",
+                marginBottom: "0.6rem",
               }}
             >
-              <Radio size={18} />
-              <span style={{ fontSize: "0.8rem", fontWeight: 600, fontFamily: "var(--font-mono)" }}>
+              <div
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "8px",
+                  background: "rgba(255, 170, 29, 0.14)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <Radio size={16} />
+              </div>
+              <span style={{ fontSize: "0.78rem", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                 APIs &amp; REAL-TIME
               </span>
             </div>
             <div
               style={{
-                fontSize: "2.4rem",
+                fontSize: "2.3rem",
                 fontWeight: 800,
                 color: "var(--text-pure)",
                 fontFamily: "var(--font-display)",
@@ -244,7 +353,7 @@ export default function Hero() {
             >
               WebSockets &amp; REST
             </div>
-            <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
+            <div style={{ fontSize: "0.86rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
               HTTP, REST API integration, JSON parsing &amp; real-time duplex WebSockets
             </div>
           </div>
@@ -261,19 +370,32 @@ export default function Hero() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.6rem",
+                gap: "0.65rem",
                 color: "var(--accent-cyan)",
-                marginBottom: "0.5rem",
+                marginBottom: "0.6rem",
               }}
             >
-              <Sparkles size={18} />
-              <span style={{ fontSize: "0.8rem", fontWeight: 600, fontFamily: "var(--font-mono)" }}>
+              <div
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "8px",
+                  background: "rgba(0, 200, 229, 0.14)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <Layers size={16} />
+              </div>
+              <span style={{ fontSize: "0.78rem", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                 STATE &amp; ARCHITECTURE
               </span>
             </div>
             <div
               style={{
-                fontSize: "2.4rem",
+                fontSize: "2.3rem",
                 fontWeight: 800,
                 color: "var(--text-pure)",
                 fontFamily: "var(--font-display)",
@@ -282,7 +404,7 @@ export default function Hero() {
             >
               GetX &amp; MobX
             </div>
-            <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
+            <div style={{ fontSize: "0.86rem", color: "var(--text-slate)", marginTop: "0.4rem" }}>
               MVVM software architecture, SQLite local storage &amp; Firebase
             </div>
           </div>

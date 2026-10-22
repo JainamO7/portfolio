@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Briefcase, GraduationCap, Calendar, CheckCircle2, Award, Wrench, FolderGit2 } from "lucide-react";
+import { Briefcase, GraduationCap, Calendar, CheckCircle2, Award, Wrench, FolderGit2, Bot, Sparkles, Code2 } from "lucide-react";
 import { WORK_EXPERIENCE, EDUCATION } from "@/data/projectsData";
 
 export default function ExperienceSection() {
@@ -141,8 +141,21 @@ export default function ExperienceSection() {
                   {/* Key Projects list */}
                   {exp.keyProjects && exp.keyProjects.length > 0 && (
                     <div style={{ marginBottom: "1.1rem" }}>
-                      <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--text-muted)", fontFamily: "var(--font-mono)", marginBottom: "0.4rem", textTransform: "uppercase" }}>
-                        Key Projects
+                      <div
+                        style={{
+                          fontSize: "0.78rem",
+                          fontWeight: 700,
+                          color: "var(--text-muted)",
+                          fontFamily: "var(--font-mono)",
+                          marginBottom: "0.45rem",
+                          textTransform: "uppercase",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.4rem",
+                        }}
+                      >
+                        <FolderGit2 size={13} color="var(--accent-vermillion)" />
+                        <span>Key Projects</span>
                       </div>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
                         {exp.keyProjects.map((p, i) => (
@@ -258,8 +271,21 @@ export default function ExperienceSection() {
                   padding: "1.5rem",
                 }}
               >
-                <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--accent-vermillion)", fontFamily: "var(--font-mono)", marginBottom: "0.4rem", textTransform: "uppercase" }}>
-                  AI-Assisted Development &amp; Practices
+                <div
+                  style={{
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    color: "var(--accent-vermillion)",
+                    fontFamily: "var(--font-mono)",
+                    marginBottom: "0.45rem",
+                    textTransform: "uppercase",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                  }}
+                >
+                  <Sparkles size={13} color="var(--accent-vermillion)" />
+                  <span>AI-Assisted Development &amp; Practices</span>
                 </div>
                 <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", marginBottom: "0.6rem" }}>
                   Modern Development Tools &amp; Practices
@@ -267,7 +293,7 @@ export default function ExperienceSection() {
                 <div style={{ fontSize: "0.85rem", color: "var(--text-slate)", lineHeight: 1.6, marginBottom: "0.75rem" }}>
                   Worked with modern AI-assisted development tools to support coding, debugging, and development workflows:
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.9rem" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", marginBottom: "0.95rem" }}>
                   {["OpenAI Codex", "Claude Code", "Google Antigravity"].map((tool, i) => (
                     <span
                       key={i}
@@ -276,18 +302,25 @@ export default function ExperienceSection() {
                         border: "1px solid rgba(0, 200, 229, 0.3)",
                         color: "var(--accent-cyan)",
                         borderRadius: "6px",
-                        padding: "0.2rem 0.55rem",
+                        padding: "0.25rem 0.65rem",
                         fontSize: "0.76rem",
                         fontFamily: "var(--font-mono)",
                         fontWeight: 600,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.35rem",
                       }}
                     >
-                      {tool}
+                      <Bot size={11} color="var(--accent-cyan)" />
+                      <span>{tool}</span>
                     </span>
                   ))}
                 </div>
-                <div style={{ fontSize: "0.82rem", color: "var(--text-muted)", lineHeight: 1.5 }}>
-                  <strong style={{ color: "var(--text-chalk)" }}>Core Practices:</strong> Git, Debugging, Troubleshooting, Application Maintenance, Performance Optimization, Version Control.
+                <div style={{ fontSize: "0.82rem", color: "var(--text-muted)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.45rem" }}>
+                  <Wrench size={13} color="var(--accent-amber)" style={{ flexShrink: 0, marginTop: "2px" }} />
+                  <div>
+                    <strong style={{ color: "var(--text-chalk)" }}>Core Practices:</strong> Git, Debugging, Troubleshooting, Application Maintenance, Performance Optimization, Version Control.
+                  </div>
                 </div>
               </div>
             </div>

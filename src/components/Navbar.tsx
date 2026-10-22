@@ -1,7 +1,19 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Smartphone, Layers, Briefcase, Cpu, Mail, Menu, X, Phone } from "lucide-react";
+import {
+  Smartphone,
+  Layers,
+  Briefcase,
+  Cpu,
+  Mail,
+  Menu,
+  X,
+  Phone,
+  MessageSquare,
+  ChevronRight,
+} from "lucide-react";
+import { Github, Linkedin } from "@/components/icons/BrandIcons";
 import { playTactileClick } from "@/utils/sound";
 
 export default function Navbar() {
@@ -190,9 +202,7 @@ export default function Navbar() {
               }}
               title="GitHub (JainamO7)"
             >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-              </svg>
+              <Github size={17} />
             </a>
 
             <a
@@ -214,9 +224,7 @@ export default function Navbar() {
               }}
               title="LinkedIn Profile"
             >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-              </svg>
+              <Linkedin size={17} />
             </a>
 
             <button
@@ -224,10 +232,10 @@ export default function Navbar() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.4rem",
+                gap: "0.45rem",
                 background: "var(--accent-vermillion)",
                 color: "#ffffff",
-                padding: "0.55rem 1.1rem",
+                padding: "0.55rem 1.15rem",
                 borderRadius: "10px",
                 fontSize: "0.86rem",
                 fontWeight: 600,
@@ -237,7 +245,7 @@ export default function Navbar() {
                 transition: "all 0.2s ease",
               }}
             >
-              <Mail size={14} />
+              <Mail size={15} />
               <span>Connect</span>
             </button>
           </div>
@@ -287,44 +295,64 @@ export default function Navbar() {
               onClick={() => handleNavClick("showroom")}
               className="mobile-menu-item"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
-                <Smartphone size={18} color="var(--accent-vermillion)" />
-                <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>Showroom</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(255, 75, 38, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Smartphone size={17} color="var(--accent-vermillion)" />
+                </div>
+                <div>
+                  <span style={{ fontWeight: 600, fontSize: "0.95rem", display: "block", color: "#fff" }}>Showroom</span>
+                  <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Hardware Frames</span>
+                </div>
               </div>
-              <span style={{ fontSize: "0.74rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Hardware Frames</span>
+              <ChevronRight size={16} color="var(--text-muted)" />
             </button>
 
             <button
               onClick={() => handleNavClick("architecture")}
               className="mobile-menu-item"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
-                <Layers size={18} color="var(--accent-amber)" />
-                <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>Architecture</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(255, 170, 29, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Layers size={17} color="var(--accent-amber)" />
+                </div>
+                <div>
+                  <span style={{ fontWeight: 600, fontSize: "0.95rem", display: "block", color: "#fff" }}>Architecture</span>
+                  <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Payments &amp; Sockets</span>
+                </div>
               </div>
-              <span style={{ fontSize: "0.74rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Payments &amp; Sockets</span>
+              <ChevronRight size={16} color="var(--text-muted)" />
             </button>
 
             <button
               onClick={() => handleNavClick("experience")}
               className="mobile-menu-item"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
-                <Briefcase size={18} color="var(--accent-emerald)" />
-                <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>Experience</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(0, 214, 114, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Briefcase size={17} color="var(--accent-emerald)" />
+                </div>
+                <div>
+                  <span style={{ fontWeight: 600, fontSize: "0.95rem", display: "block", color: "#fff" }}>Experience</span>
+                  <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>1 Yr • Adite &amp; JDK</span>
+                </div>
               </div>
-              <span style={{ fontSize: "0.74rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>1 Yr • Adite &amp; JDK</span>
+              <ChevronRight size={16} color="var(--text-muted)" />
             </button>
 
             <button
               onClick={() => handleNavClick("skills")}
               className="mobile-menu-item"
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
-                <Cpu size={18} color="var(--accent-cyan)" />
-                <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>Skills</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(0, 200, 229, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Cpu size={17} color="var(--accent-cyan)" />
+                </div>
+                <div>
+                  <span style={{ fontWeight: 600, fontSize: "0.95rem", display: "block", color: "#fff" }}>Skills</span>
+                  <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Flutter, GetX, Dart</span>
+                </div>
               </div>
-              <span style={{ fontSize: "0.74rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Flutter, GetX, Dart</span>
+              <ChevronRight size={16} color="var(--text-muted)" />
             </button>
 
             <button
@@ -332,14 +360,19 @@ export default function Navbar() {
               className="mobile-menu-item"
               style={{
                 background: "rgba(255, 75, 38, 0.12)",
-                border: "1px solid rgba(255, 75, 38, 0.3)",
+                border: "1px solid rgba(255, 75, 38, 0.35)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
-                <Mail size={18} color="var(--accent-vermillion)" />
-                <span style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--accent-vermillion)" }}>Direct Connect</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "var(--accent-vermillion)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Mail size={16} color="#fff" />
+                </div>
+                <div>
+                  <span style={{ fontWeight: 700, fontSize: "0.95rem", display: "block", color: "var(--accent-vermillion)" }}>Direct Connect</span>
+                  <span style={{ fontSize: "0.72rem", color: "var(--accent-vermillion)", fontFamily: "var(--font-mono)" }}>Get in Touch</span>
+                </div>
               </div>
-              <span style={{ fontSize: "0.74rem", color: "var(--accent-vermillion)", fontFamily: "var(--font-mono)" }}>Get in Touch</span>
+              <ChevronRight size={16} color="var(--accent-vermillion)" />
             </button>
 
             {/* Quick Profile & Phone Strip in Mobile Menu */}
@@ -358,9 +391,10 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary"
-                style={{ padding: "0.55rem", justifyContent: "center", fontSize: "0.8rem" }}
+                style={{ padding: "0.55rem", justifyContent: "center", fontSize: "0.82rem", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
               >
-                GitHub
+                <Github size={15} />
+                <span>GitHub</span>
               </a>
 
               <a
@@ -368,18 +402,30 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary"
-                style={{ padding: "0.55rem", justifyContent: "center", fontSize: "0.8rem", color: "#0A66C2" }}
+                style={{ padding: "0.55rem", justifyContent: "center", fontSize: "0.82rem", color: "#0A66C2", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
               >
-                LinkedIn
+                <Linkedin size={15} />
+                <span>LinkedIn</span>
+              </a>
+
+              <a
+                href="https://wa.me/917490075875"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+                style={{ padding: "0.55rem", justifyContent: "center", fontSize: "0.82rem", color: "var(--accent-emerald)", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
+              >
+                <MessageSquare size={14} />
+                <span>WhatsApp</span>
               </a>
 
               <a
                 href="tel:+917490075875"
                 className="btn-secondary"
-                style={{ padding: "0.55rem", justifyContent: "center", fontSize: "0.8rem", gridColumn: "span 2", color: "var(--accent-emerald)" }}
+                style={{ padding: "0.55rem", justifyContent: "center", fontSize: "0.82rem", color: "var(--accent-emerald)", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
               >
-                <Phone size={13} />
-                <span>Call +91 7490075875</span>
+                <Phone size={14} />
+                <span>Call Directly</span>
               </a>
             </div>
           </div>

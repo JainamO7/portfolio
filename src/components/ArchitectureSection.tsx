@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ShieldCheck, Radio, Layers, Database, Zap, Lock, RefreshCw, Cpu, Code2 } from "lucide-react";
+import { ShieldCheck, Radio, Layers, Database, Zap, Lock, RefreshCw, Cpu, Code2, CreditCard, Volume2, Sliders, CheckCircle2 } from "lucide-react";
 import { playTactileClick } from "@/utils/sound";
 
 export default function ArchitectureSection() {
@@ -102,8 +102,8 @@ export default function ArchitectureSection() {
               transition: "all 0.2s ease",
             }}
           >
-            <Lock size={16} />
-            <span>Stripe & NMI Payments</span>
+            <CreditCard size={16} />
+            <span>Stripe &amp; NMI Payments</span>
           </button>
 
           <button
@@ -145,7 +145,7 @@ export default function ArchitectureSection() {
             }}
           >
             <Layers size={16} />
-            <span>GetX & MobX State</span>
+            <span>GetX &amp; MobX State</span>
           </button>
 
           <button
@@ -165,8 +165,8 @@ export default function ArchitectureSection() {
               transition: "all 0.2s ease",
             }}
           >
-            <Zap size={16} />
-            <span>Media Engine & Audio</span>
+            <Volume2 size={16} />
+            <span>Media Engine &amp; Audio</span>
           </button>
         </div>
 
@@ -194,17 +194,34 @@ export default function ArchitectureSection() {
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>1. Zero Raw Card Exposure</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>Direct client-side tokenization via secure Flutter SDK bridges; sensitive card numbers never touch intermediary servers.</div>
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(255, 75, 38, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <ShieldCheck size={16} color="var(--accent-vermillion)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Zero Raw Card Exposure</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Direct client-side tokenization via secure Flutter SDK bridges; sensitive card numbers never touch intermediary servers.</div>
+                    </div>
                   </div>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>2. Idempotent Retry Transactions</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>Unique client UUID keys assigned to each recharge order, preventing duplicate debits during cell network drops.</div>
+
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(255, 170, 29, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <RefreshCw size={16} color="var(--accent-amber)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Idempotent Retry Transactions</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Unique client UUID keys assigned to each recharge order, preventing duplicate debits during cell network drops.</div>
+                    </div>
                   </div>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>3. Webhook Ledger Reconciliation</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>Asynchronous server webhook verification updates dealer wallet balances within 100ms.</div>
+
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(0, 214, 114, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <CheckCircle2 size={16} color="var(--accent-emerald)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Webhook Ledger Reconciliation</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Asynchronous server webhook verification updates dealer wallet balances within 100ms.</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -271,13 +288,24 @@ class NMIService implements PaymentService {
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>1. Exponential Backoff Auto-Reconnect</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>When switching between Wi-Fi and 5G cellular, connections seamlessly resume with zero dropped event frames.</div>
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(255, 170, 29, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <RefreshCw size={16} color="var(--accent-amber)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Exponential Backoff Auto-Reconnect</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>When switching between Wi-Fi and 5G cellular, connections seamlessly resume with zero dropped event frames.</div>
+                    </div>
                   </div>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>2. Heartbeat Ping / Pong Monitoring</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>Active socket health checks every 25 seconds prevent silent dead connections caused by aggressive mobile OS sleep policies.</div>
+
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(0, 214, 114, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <Radio size={16} color="var(--accent-emerald)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Heartbeat Ping / Pong Monitoring</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Active socket health checks every 25 seconds prevent silent dead connections caused by aggressive mobile OS sleep policies.</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -327,10 +355,10 @@ class NMIService implements PaymentService {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2.5rem" }}>
               <div>
                 <div style={{ fontSize: "0.78rem", color: "var(--accent-emerald)", fontWeight: 700, fontFamily: "var(--font-mono)", marginBottom: "0.4rem" }}>
-                  PREDICTABLE & CLEAN SCALABILITY
+                  PREDICTABLE &amp; CLEAN SCALABILITY
                 </div>
                 <h3 style={{ fontSize: "1.8rem", fontWeight: 800, marginBottom: "1rem" }}>
-                  GetX & MobX Reactive State Architecture
+                  GetX &amp; MobX Reactive State Architecture
                 </h3>
                 <p style={{ color: "var(--text-slate)", marginBottom: "1.2rem", lineHeight: 1.6 }}>
                   Strict decoupling between UI presentation layers, domain repositories, and data sources. Guarantees 60fps scrolling
@@ -338,13 +366,24 @@ class NMIService implements PaymentService {
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Controller & View Separation</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>Zero business calculations inside build() methods. UI views remain purely declarative.</div>
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(0, 214, 114, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <Layers size={16} color="var(--accent-emerald)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Controller &amp; View Separation</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Zero business calculations inside build() methods. UI views remain purely declarative.</div>
+                    </div>
                   </div>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Targeted Obx() Rebuilding</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>Only micro-widgets update when reactive variables emit changes, minimizing frame budget usage.</div>
+
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(0, 200, 229, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <Zap size={16} color="var(--accent-cyan)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Targeted Obx() Rebuilding</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Only micro-widgets update when reactive variables emit changes, minimizing frame budget usage.</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -388,10 +427,10 @@ class NMIService implements PaymentService {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "2.5rem" }}>
               <div>
                 <div style={{ fontSize: "0.78rem", color: "var(--accent-cyan)", fontWeight: 700, fontFamily: "var(--font-mono)", marginBottom: "0.4rem" }}>
-                  BACKGROUND SERVICES & NATIVE BRIDGING
+                  BACKGROUND SERVICES &amp; NATIVE BRIDGING
                 </div>
                 <h3 style={{ fontSize: "1.8rem", fontWeight: 800, marginBottom: "1rem" }}>
-                  High-Performance Media & Equalizer Pipeline
+                  High-Performance Media &amp; Equalizer Pipeline
                 </h3>
                 <p style={{ color: "var(--text-slate)", marginBottom: "1.2rem", lineHeight: 1.6 }}>
                   Built for <strong>VideoFlex</strong> and <strong>Audify Music Player</strong>. Delivers continuous background audio,
@@ -399,13 +438,24 @@ class NMIService implements PaymentService {
                 </p>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Native AudioService Binding</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>Runs audio decoder on background thread with Android foreground service notification and iOS AVAudioSession configuration.</div>
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(0, 200, 229, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <Volume2 size={16} color="var(--accent-cyan)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>Native AudioService Binding</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Runs audio decoder on background thread with Android foreground service notification and iOS AVAudioSession configuration.</div>
+                    </div>
                   </div>
-                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem", borderRadius: "10px", border: "1px solid var(--border-subtle)" }}>
-                    <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>10-Band Hardware Equalizer</div>
-                    <div style={{ fontSize: "0.82rem", color: "var(--text-slate)" }}>Real-time parametric equalization utilizing Android OpenSL ES / AudioTrack and iOS AudioUnit DSP effects.</div>
+
+                  <div style={{ background: "var(--bg-carbon)", padding: "0.85rem 1rem", borderRadius: "10px", border: "1px solid var(--border-subtle)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                    <div style={{ width: "30px", height: "30px", borderRadius: "8px", background: "rgba(255, 75, 38, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                      <Sliders size={16} color="var(--accent-vermillion)" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: "var(--text-chalk)", fontSize: "0.9rem" }}>10-Band Hardware Equalizer</div>
+                      <div style={{ fontSize: "0.82rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Real-time parametric equalization utilizing Android OpenSL ES / AudioTrack and iOS AudioUnit DSP effects.</div>
+                    </div>
                   </div>
                 </div>
               </div>

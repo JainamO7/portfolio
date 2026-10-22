@@ -26,6 +26,12 @@ import {
   Maximize2,
   RefreshCw,
   FolderDown,
+  Film,
+  Zap,
+  Globe,
+  Music,
+  Bell,
+  ChevronRight,
 } from "lucide-react";
 import { PROJECTS, Project } from "@/data/projectsData";
 import { playTactileClick } from "@/utils/sound";
@@ -837,12 +843,13 @@ export default function DeviceShowroom() {
                     style={{
                       display: "flex",
                       alignItems: "flex-start",
-                      gap: "0.6rem",
+                      gap: "0.55rem",
                       fontSize: "0.9rem",
                       color: "var(--text-slate)",
+                      lineHeight: 1.5,
                     }}
                   >
-                    <span style={{ color: currentProject.appDetails.themeColor, fontWeight: 800 }}>›</span>
+                    <ChevronRight size={15} style={{ color: currentProject.appDetails.themeColor, flexShrink: 0, marginTop: "3px" }} />
                     <span>{feat}</span>
                   </li>
                 ))}
@@ -864,7 +871,7 @@ export default function DeviceShowroom() {
                   fontSize: "0.82rem",
                   fontWeight: 700,
                   color: "var(--accent-amber)",
-                  marginBottom: "0.5rem",
+                  marginBottom: "0.6rem",
                   display: "flex",
                   alignItems: "center",
                   gap: "0.5rem",
@@ -874,10 +881,11 @@ export default function DeviceShowroom() {
                 <Layers size={15} />
                 <span>ARCHITECTURAL HIGHLIGHT</span>
               </div>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {currentProject.architecturalHighlights.map((arch, idx) => (
-                  <li key={idx} style={{ fontSize: "0.86rem", color: "var(--text-slate)" }}>
-                    • {arch}
+                  <li key={idx} style={{ fontSize: "0.86rem", color: "var(--text-slate)", display: "flex", alignItems: "flex-start", gap: "0.5rem", lineHeight: 1.5 }}>
+                    <CheckCircle2 size={14} color="var(--accent-amber)" style={{ flexShrink: 0, marginTop: "3px" }} />
+                    <span>{arch}</span>
                   </li>
                 ))}
               </ul>
@@ -1128,20 +1136,35 @@ function renderSimulatedScreen(
           </div>
 
           {/* Core Feature Matrix */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-            <div style={{ background: "#11141C", padding: "0.75rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>🎬 Online & Offline Dual Playback Engine</div>
-              <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>ExoPlayer high-bitrate streaming with background downloads & pause/resume caching.</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+            <div style={{ background: "#11141C", padding: "0.75rem 0.85rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "flex-start", gap: "0.65rem" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "7px", background: "rgba(255, 51, 102, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                <Film size={15} color="#FF3366" />
+              </div>
+              <div>
+                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>Online &amp; Offline Dual Playback Engine</div>
+                <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>ExoPlayer high-bitrate streaming with background downloads &amp; pause/resume caching.</div>
+              </div>
             </div>
 
-            <div style={{ background: "#11141C", padding: "0.75rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>⚡ Short Video Reels & Live Search</div>
-              <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Vertical short-form feed with sub-200ms fuzzy search indexing.</div>
+            <div style={{ background: "#11141C", padding: "0.75rem 0.85rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "flex-start", gap: "0.65rem" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "7px", background: "rgba(255, 170, 29, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                <Zap size={15} color="var(--accent-amber)" />
+              </div>
+              <div>
+                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>Short Video Reels &amp; Live Search</div>
+                <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Vertical short-form feed with sub-200ms fuzzy search indexing.</div>
+              </div>
             </div>
 
-            <div style={{ background: "#11141C", padding: "0.75rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>🌐 Multilingual & Dual Themes</div>
-              <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Dynamic localization with instant dark and light mode UI switching.</div>
+            <div style={{ background: "#11141C", padding: "0.75rem 0.85rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "flex-start", gap: "0.65rem" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "7px", background: "rgba(0, 200, 229, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                <Globe size={15} color="var(--accent-cyan)" />
+              </div>
+              <div>
+                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>Multilingual &amp; Dual Themes</div>
+                <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Dynamic localization with instant dark and light mode UI switching.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1168,7 +1191,7 @@ function renderSimulatedScreen(
             marginTop: "1rem",
           }}
         >
-          <span>Direct Watch & Inspect on CodeCanyon</span>
+          <span>Direct Watch &amp; Inspect on CodeCanyon</span>
           <ExternalLink size={16} />
         </a>
       </div>
@@ -1205,20 +1228,35 @@ function renderSimulatedScreen(
           </div>
 
           {/* Core Feature Matrix */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-            <div style={{ background: "#11141C", padding: "0.75rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>🎛️ 10-Band Hardware DSP Equalizer</div>
-              <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Native parametric frequency equalization, bass-boost, and 3D virtualizer.</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+            <div style={{ background: "#11141C", padding: "0.75rem 0.85rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "flex-start", gap: "0.65rem" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "7px", background: "rgba(0, 229, 255, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                <Sliders size={15} color="#00E5FF" />
+              </div>
+              <div>
+                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>10-Band Hardware DSP Equalizer</div>
+                <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Native parametric frequency equalization, bass-boost, and 3D virtualizer.</div>
+              </div>
             </div>
 
-            <div style={{ background: "#11141C", padding: "0.75rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>📜 Synchronized Real-Time Lyrics</div>
-              <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Karaoke-style lyric scrolling engine with millisecond audio timestamp sync.</div>
+            <div style={{ background: "#11141C", padding: "0.75rem 0.85rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "flex-start", gap: "0.65rem" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "7px", background: "rgba(0, 214, 114, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                <Music size={15} color="var(--accent-emerald)" />
+              </div>
+              <div>
+                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>Synchronized Real-Time Lyrics</div>
+                <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Karaoke-style lyric scrolling engine with millisecond audio timestamp sync.</div>
+              </div>
             </div>
 
-            <div style={{ background: "#11141C", padding: "0.75rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>🔔 Push Messaging & Monetization</div>
-              <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Integrated Firebase Cloud Messaging (FCM) & Google AdMob advertising banner rails.</div>
+            <div style={{ background: "#11141C", padding: "0.75rem 0.85rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "flex-start", gap: "0.65rem" }}>
+              <div style={{ width: "28px", height: "28px", borderRadius: "7px", background: "rgba(255, 170, 29, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "2px" }}>
+                <Bell size={15} color="var(--accent-amber)" />
+              </div>
+              <div>
+                <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>Push Messaging &amp; Monetization</div>
+                <div style={{ fontSize: "0.72rem", color: "var(--text-slate)", marginTop: "0.2rem" }}>Integrated Firebase Cloud Messaging (FCM) &amp; Google AdMob advertising banner rails.</div>
+              </div>
             </div>
           </div>
         </div>
