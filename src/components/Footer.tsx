@@ -170,7 +170,7 @@ export default function Footer() {
             </div>
 
             {/* Live Viewport Chip */}
-            <div
+            {/* <div
               style={{
                 background: "var(--bg-pitch)",
                 border: "1px solid var(--border-medium)",
@@ -195,8 +195,8 @@ export default function Footer() {
                 <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#fff" }} suppressHydrationWarning>
                   {mounted ? viewportInfo.category : "Calibrating display..."}
                 </div>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
           </div>
 
           {/* Quick Navigation Links */}
@@ -546,10 +546,10 @@ export default function Footer() {
             color: "var(--text-muted)",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {/* <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Sparkles size={13} color="var(--accent-vermillion)" />
             <span>Built with Next.js, Lucide Iconography &amp; Flutter Architecture Rigor.</span>
-          </div>
+          </div> */}
           <div suppressHydrationWarning>
             © {currentYear} Jainam Kikani. All rights reserved.
           </div>

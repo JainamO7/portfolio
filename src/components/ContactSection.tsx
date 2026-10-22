@@ -585,9 +585,9 @@ export default function ContactSection() {
                     <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text-chalk)" }}>
                       Email Address
                     </label>
-                    <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                    {/* <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
                       Live MX &amp; Typo Verification
-                    </span>
+                    </span> */}
                   </div>
 
                   <div style={{ position: "relative" }}>
