@@ -1,34 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* Architectural Obsidian Palette */
-  --bg-pitch: #090a0d;
-  --bg-carbon: #12151b;
-  --bg-surface: #181c24;
-  --bg-elevated: #202632;
-  --bg-glass: rgba(18, 21, 27, 0.75);
-  --bg-glass-elevated: rgba(28, 33, 44, 0.85);
+  /* Official Flutter & Flappy Bird Dark Palette */
+  --bg-pitch: #06090e;
+  --bg-carbon: #0b111a;
+  --bg-surface: #101926;
+  --bg-elevated: #162234;
+  --bg-glass: rgba(11, 17, 26, 0.8);
+  --bg-glass-elevated: rgba(16, 25, 38, 0.9);
 
-  /* Precise Machined Borders */
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-medium: rgba(255, 255, 255, 0.12);
-  --border-active: rgba(255, 75, 38, 0.45);
-  --border-titanium: #2e3440;
+  /* Flutter Sky Blue Machined Micro-Borders */
+  --border-subtle: rgba(84, 197, 248, 0.12);
+  --border-medium: rgba(84, 197, 248, 0.22);
+  --border-active: #54c5f8;
+  --border-titanium: #1e2c40;
 
   /* Human-Centric Typography */
   --text-pure: #ffffff;
-  --text-chalk: #f2f4f8;
-  --text-slate: #9ba3b2;
-  --text-muted: #656d7d;
+  --text-chalk: #f0f7ff;
+  --text-slate: #94a9c9;
+  --text-muted: #5e7394;
 
-  /* Strategic Accents (Anti-AI Cliché) */
-  --accent-vermillion: #ff4b26;
-  --accent-vermillion-glow: rgba(255, 75, 38, 0.25);
-  --accent-amber: #ffaa1d;
-  --accent-amber-glow: rgba(255, 170, 29, 0.2);
-  --accent-emerald: #00d672;
-  --accent-emerald-glow: rgba(0, 214, 114, 0.25);
-  --accent-cyan: #00c8e5;
+  /* Official Flutter & Flappy Bird Accents */
+  --accent-vermillion: #54c5f8; /* Flutter Sky Blue #54C5F8 */
+  --accent-vermillion-glow: rgba(84, 197, 248, 0.38);
+  --accent-amber: #f7d538; /* Flappy Bird Golden Yellow #F7D538 */
+  --accent-amber-glow: rgba(247, 213, 56, 0.32);
+  --accent-emerald: #10b981; /* Flappy Pipe Green #10B981 */
+  --accent-emerald-glow: rgba(16, 185, 129, 0.28);
+  --accent-cyan: #0175c2; /* Flutter Core Blue #0175C2 */
+  --accent-cyan-glow: rgba(1, 117, 194, 0.35);
 
   /* Typography Families */
   --font-display: 'Syne', system-ui, -apple-system, sans-serif;
@@ -40,7 +41,7 @@
   --container-max: 1680px;
 
   /* Realistic Device Lighting & Shadows */
-  --device-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8), 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+  --device-shadow: 0 40px 100px -20px rgba(1, 117, 194, 0.35), 0 20px 40px -15px rgba(0, 0, 0, 0.8);
   --glass-blur: blur(20px);
 }
 
@@ -85,14 +86,15 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Ambient Subtle Mesh Glows (Warm Industrial & Obsidian, not neon AI) */
+/* Ambient Flutter & Flappy Atmosphere */
 .ambient-glow-1 {
   position: absolute;
-  top: -120px;
-  right: 5%;
-  width: clamp(350px, 45vw, 800px);
-  height: clamp(350px, 45vw, 800px);
-  background: radial-gradient(circle, rgba(255, 75, 38, 0.08) 0%, rgba(9, 10, 13, 0) 70%);
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(500px, 70vw, 1200px);
+  height: clamp(350px, 45vw, 650px);
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(1, 117, 194, 0.28), rgba(0, 0, 0, 0));
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
@@ -104,7 +106,7 @@ body::before {
   left: -100px;
   width: clamp(400px, 50vw, 900px);
   height: clamp(400px, 50vw, 900px);
-  background: radial-gradient(circle, rgba(255, 170, 29, 0.05) 0%, rgba(9, 10, 13, 0) 70%);
+  background: radial-gradient(circle, rgba(247, 213, 56, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
@@ -199,53 +201,55 @@ h1, h2, h3, h4, .display-font {
   }
 }
 
-/* Tactical Button Styling */
+/* Official Flutter & Flappy Bird Button Styling */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: var(--accent-vermillion);
+  background: linear-gradient(135deg, #54C5F8 0%, #0175C2 100%);
   color: #ffffff;
-  padding: 0.85rem 1.75rem;
+  padding: 0.85rem 1.85rem;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: var(--font-body);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   cursor: pointer;
-  box-shadow: 0 4px 20px var(--accent-vermillion-glow);
+  box-shadow: 0 4px 18px rgba(1, 117, 194, 0.35), 0 2px 8px rgba(84, 197, 248, 0.25);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
 }
 
 .btn-primary:hover {
-  background: #ff5e3b;
+  background: linear-gradient(135deg, #70D1FF 0%, #0286DD 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px var(--accent-vermillion-glow);
+  box-shadow: 0 6px 26px rgba(1, 117, 194, 0.5), 0 2px 12px rgba(84, 197, 248, 0.35);
 }
 
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: var(--bg-carbon);
+  background: rgba(84, 197, 248, 0.08);
   color: var(--text-chalk);
-  padding: 0.85rem 1.75rem;
+  padding: 0.85rem 1.85rem;
   font-size: 0.95rem;
   font-weight: 600;
   font-family: var(--font-body);
-  border-radius: 12px;
-  border: 1px solid var(--border-medium);
+  border-radius: 9999px;
+  border: 1px solid rgba(84, 197, 248, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
 }
 
 .btn-secondary:hover {
-  background: var(--bg-surface);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(84, 197, 248, 0.16);
+  border-color: rgba(84, 197, 248, 0.45);
+  color: #ffffff;
   transform: translateY(-2px);
-  color: var(--text-pure);
 }
 
 /* Realistic Screen Glare reflection overlay */

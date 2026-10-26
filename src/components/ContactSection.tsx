@@ -266,15 +266,6 @@ export default function ContactSection() {
                   gap: "0.4rem",
                 }}
               >
-                <span
-                  style={{
-                    width: "7px",
-                    height: "7px",
-                    borderRadius: "50%",
-                    background: "var(--accent-emerald)",
-                  }}
-                  className="status-beacon"
-                />
                 CURRENTLY OPEN TO OPPORTUNITIES
               </div>
 

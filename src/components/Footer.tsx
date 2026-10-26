@@ -111,7 +111,7 @@ export default function Footer() {
                   width: "34px",
                   height: "34px",
                   borderRadius: "9px",
-                  background: "linear-gradient(135deg, #FF4B26 0%, #B82808 100%)",
+                  background: "linear-gradient(135deg, #54C5F8 0%, #0175C2 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -119,7 +119,7 @@ export default function Footer() {
                   color: "#ffffff",
                   fontSize: "0.95rem",
                   letterSpacing: "-0.5px",
-                  boxShadow: "0 2px 10px rgba(255, 75, 38, 0.35)",
+                  boxShadow: "0 2px 14px rgba(84, 197, 248, 0.45)",
                 }}
               >
                 JK

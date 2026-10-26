@@ -42,7 +42,7 @@ export default function NotFound() {
             fontWeight: 900,
             fontFamily: "var(--font-display)",
             lineHeight: 1,
-            background: "linear-gradient(135deg, #FF4B26 0%, #FFAA1D 100%)",
+            background: "linear-gradient(135deg, #54C5F8 0%, #0175C2 70%, #F7D538 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             marginBottom: "1rem",

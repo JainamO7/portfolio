@@ -62,13 +62,13 @@ export default function Navbar() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            background: scrolled ? "rgba(18, 21, 27, 0.94)" : "rgba(18, 21, 27, 0.75)",
+            background: scrolled ? "rgba(11, 17, 26, 0.95)" : "rgba(11, 17, 26, 0.8)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
             border: "1px solid var(--border-medium)",
             borderRadius: "18px",
             padding: "0.75rem 1.4rem",
-            boxShadow: scrolled ? "0 16px 40px -10px rgba(0,0,0,0.6)" : "none",
+            boxShadow: scrolled ? "0 16px 40px -10px rgba(0, 0, 0, 0.75), 0 0 20px rgba(84, 197, 248, 0.08)" : "none",
             transition: "all 0.3s ease",
             position: "relative",
           }}
@@ -91,7 +91,7 @@ export default function Navbar() {
                 width: "36px",
                 height: "36px",
                 borderRadius: "10px",
-                background: "linear-gradient(135deg, #FF4B26 0%, #B82808 100%)",
+                background: "linear-gradient(135deg, #54C5F8 0%, #0175C2 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -99,7 +99,7 @@ export default function Navbar() {
                 color: "#ffffff",
                 fontFamily: "var(--font-display)",
                 fontSize: "1.1rem",
-                boxShadow: "0 2px 10px rgba(255, 75, 38, 0.35)",
+                boxShadow: "0 2px 14px rgba(84, 197, 248, 0.45)",
                 flexShrink: 0,
               }}
             >
@@ -127,16 +127,6 @@ export default function Navbar() {
                   fontFamily: "var(--font-mono)",
                 }}
               >
-                <span
-                  style={{
-                    width: "7px",
-                    height: "7px",
-                    borderRadius: "50%",
-                    background: "var(--accent-emerald)",
-                    display: "inline-block",
-                  }}
-                  className="status-beacon"
-                />
                 FLUTTER &amp; MOBILE DEV
               </div>
             </div>
@@ -233,16 +223,16 @@ export default function Navbar() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.45rem",
-                background: "var(--accent-vermillion)",
+                background: "linear-gradient(135deg, #54C5F8 0%, #0175C2 100%)",
                 color: "#ffffff",
-                padding: "0.55rem 1.15rem",
-                borderRadius: "10px",
+                padding: "0.55rem 1.25rem",
+                borderRadius: "9999px",
                 fontSize: "0.86rem",
-                fontWeight: 600,
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                boxShadow: "0 2px 12px var(--accent-vermillion-glow)",
+                fontWeight: 700,
+                border: "1px solid rgba(255, 255, 255, 0.35)",
+                boxShadow: "0 2px 14px rgba(84, 197, 248, 0.32)",
                 cursor: "pointer",
-                transition: "all 0.2s ease",
+                transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             >
               <Mail size={15} />

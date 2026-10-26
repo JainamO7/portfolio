@@ -9,7 +9,6 @@ import {
   Layers,
   MapPin,
   Mail,
-  Sparkles,
 } from "lucide-react";
 import { Github, Linkedin } from "@/components/icons/BrandIcons";
 import { playTactileClick } from "@/utils/sound";
@@ -28,7 +27,7 @@ export default function Hero() {
       }}
     >
       <div className="main-container">
-        {/* Top Status & Location Badge */}
+        {/* Top Status & Location Badge (shadcn-style pill) */}
         <div
           style={{
             display: "inline-flex",
@@ -37,22 +36,12 @@ export default function Hero() {
             background: "var(--bg-carbon)",
             border: "1px solid var(--border-medium)",
             borderRadius: "100px",
-            padding: "0.4rem 1.1rem",
+            padding: "0.45rem 1.15rem",
             marginBottom: "1.8rem",
             boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
             flexWrap: "wrap",
           }}
         >
-          <span
-            style={{
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              background: "var(--accent-emerald)",
-              display: "inline-block",
-            }}
-            className="status-beacon"
-          />
           <span
             style={{
               fontSize: "0.82rem",
@@ -95,7 +84,7 @@ export default function Hero() {
           Building cross-platform mobile solutions with{" "}
           <span
             style={{
-              background: "linear-gradient(135deg, #FF4B26 0%, #FFAA1D 100%)",
+              background: "linear-gradient(135deg, #54C5F8 0%, #0175C2 65%, #F7D538 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
