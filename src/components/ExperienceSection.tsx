@@ -1,330 +1,77 @@
-"use client";
-
-import React from "react";
-import { Briefcase, GraduationCap, Calendar, CheckCircle2, Award, Wrench, FolderGit2, Bot, Sparkles, Code2 } from "lucide-react";
-import { WORK_EXPERIENCE, EDUCATION } from "@/data/projectsData";
+import { Briefcase, Calendar, MapPin } from "lucide-react";
+import { WORK_EXPERIENCE } from "@/data/projectsData";
 
 export default function ExperienceSection() {
   return (
-    <section
-      id="experience"
-      style={{
-        paddingTop: "clamp(4rem, 8vh, 7rem)",
-        paddingBottom: "clamp(5rem, 10vh, 8rem)",
-        position: "relative",
-      }}
-    >
-      <div className="main-container">
+    <section id="experience" className="py-20 border-b border-[var(--color-border)]">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              background: "rgba(0, 214, 114, 0.12)",
-              border: "1px solid var(--accent-emerald-glow)",
-              borderRadius: "100px",
-              padding: "0.35rem 1rem",
-              marginBottom: "1rem",
-            }}
-          >
-            <Briefcase size={14} color="var(--accent-emerald)" />
-            <span
-              style={{
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                color: "var(--accent-emerald)",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                fontFamily: "var(--font-mono)",
-              }}
-            >
-              Career & Proven Track Record
-            </span>
-          </div>
-
-          <h2
-            style={{
-              fontSize: "clamp(2rem, 3.8vw, 3.5rem)",
-              fontWeight: 800,
-              lineHeight: 1.15,
-              marginBottom: "1rem",
-            }}
-          >
-            Professional Experience &amp; Education
-          </h2>
-
-          <p
-            style={{
-              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
-              color: "var(--text-slate)",
-              maxWidth: "760px",
-              margin: "0 auto",
-            }}
-          >
-            Proven cross-platform mobile development track record for Android &amp; iOS, verified by published applications on Google Play and commercial deployments.
+        <div className="mb-14">
+          <p className="text-xs font-mono uppercase tracking-wider text-[var(--color-accent)] mb-2">
+            Experience
           </p>
+          <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[var(--color-text-primary)]">
+            Professional background.
+          </h2>
         </div>
 
-        {/* Experience & Education Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))",
-            gap: "2.5rem",
-          }}
-        >
-          {/* Work History */}
-          <div>
-            <h3
-              style={{
-                fontSize: "1.35rem",
-                fontWeight: 700,
-                marginBottom: "1.5rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                color: "var(--text-pure)",
-              }}
+        {/* Experience Timeline */}
+        <div className="space-y-12">
+          {WORK_EXPERIENCE.map((exp, idx) => (
+            <div
+              key={idx}
+              className="relative pl-6 sm:pl-8 border-l border-[var(--color-border)] space-y-4"
             >
-              <Briefcase size={20} color="var(--accent-vermillion)" />
-              <span>Professional Experience</span>
-            </h3>
+              {/* Timeline marker */}
+              <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] ring-4 ring-[var(--color-canvas)]" />
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              {WORK_EXPERIENCE.map((exp, idx) => (
-                <div
-                  key={idx}
-                  className="glass-panel"
-                  style={{
-                    padding: "1.75rem",
-                    position: "relative",
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.4rem" }}>
-                    <div>
-                      <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "var(--text-pure)" }}>{exp.role}</div>
-                      <div style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--accent-vermillion)" }}>{exp.company}</div>
-                    </div>
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                        background: "rgba(255, 255, 255, 0.06)",
-                        padding: "0.25rem 0.65rem",
-                        borderRadius: "8px",
-                        fontSize: "0.78rem",
-                        color: "var(--text-slate)",
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      <Calendar size={12} />
-                      <span>{exp.period}</span>
-                    </div>
-                  </div>
-
-                  <p style={{ fontSize: "0.88rem", color: "var(--text-slate)", margin: "0.8rem 0 1rem 0", lineHeight: 1.55 }}>
-                    {exp.summary}
+              {/* Role & Company Header */}
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4">
+                <div>
+                  <h3 className="font-serif text-xl sm:text-2xl font-medium text-[var(--color-text-primary)]">
+                    {exp.role}
+                  </h3>
+                  <p className="text-base font-medium text-[var(--color-text-muted)]">
+                    {exp.company}
                   </p>
+                </div>
 
-                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.2rem" }}>
-                    {exp.highlights.map((item, i) => (
-                      <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", fontSize: "0.85rem", color: "var(--text-chalk)" }}>
-                        <CheckCircle2 size={15} color="var(--accent-emerald)" style={{ flexShrink: 0, marginTop: "2px" }} />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Key Projects list */}
-                  {exp.keyProjects && exp.keyProjects.length > 0 && (
-                    <div style={{ marginBottom: "1.1rem" }}>
-                      <div
-                        style={{
-                          fontSize: "0.78rem",
-                          fontWeight: 700,
-                          color: "var(--text-muted)",
-                          fontFamily: "var(--font-mono)",
-                          marginBottom: "0.45rem",
-                          textTransform: "uppercase",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.4rem",
-                        }}
-                      >
-                        <FolderGit2 size={13} color="var(--accent-vermillion)" />
-                        <span>Key Projects</span>
-                      </div>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                        {exp.keyProjects.map((p, i) => (
-                          <span
-                            key={i}
-                            style={{
-                              background: "rgba(255, 75, 38, 0.08)",
-                              border: "1px solid rgba(255, 75, 38, 0.2)",
-                              padding: "0.2rem 0.55rem",
-                              borderRadius: "6px",
-                              fontSize: "0.75rem",
-                              color: "var(--accent-vermillion)",
-                              fontWeight: 600,
-                            }}
-                          >
-                            {p}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                    {exp.technologies.map((tech, i) => (
-                      <span
-                        key={i}
-                        style={{
-                          background: "var(--bg-carbon)",
-                          border: "1px solid var(--border-subtle)",
-                          padding: "0.2rem 0.55rem",
-                          borderRadius: "6px",
-                          fontSize: "0.75rem",
-                          color: "var(--text-slate)",
-                          fontFamily: "var(--font-mono)",
-                        }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                <div className="flex items-center gap-3 text-xs font-mono text-[var(--color-text-subtle)]">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{exp.dates}</span>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Education & Practices */}
-          <div>
-            <h3
-              style={{
-                fontSize: "1.35rem",
-                fontWeight: 700,
-                marginBottom: "1.5rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                color: "var(--text-pure)",
-              }}
-            >
-              <GraduationCap size={22} color="var(--accent-amber)" />
-              <span>Academic Foundations</span>
-            </h3>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              {EDUCATION.map((edu, idx) => (
-                <div
-                  key={idx}
-                  className="glass-panel"
-                  style={{
-                    padding: "1.75rem",
-                    position: "relative",
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.4rem" }}>
-                    <div>
-                      <div style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--text-pure)" }}>{edu.degree}</div>
-                      <div style={{ fontSize: "0.92rem", fontWeight: 600, color: "var(--accent-amber)", marginTop: "0.2rem" }}>
-                        {edu.institution}
-                      </div>
-                      {edu.college && (
-                        <div style={{ fontSize: "0.85rem", color: "var(--text-slate)", marginTop: "0.25rem" }}>
-                          College: <span style={{ color: "var(--text-chalk)", fontWeight: 600 }}>{edu.college}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                        background: "rgba(255, 170, 29, 0.12)",
-                        border: "1px solid rgba(255, 170, 29, 0.25)",
-                        padding: "0.25rem 0.65rem",
-                        borderRadius: "8px",
-                        fontSize: "0.78rem",
-                        color: "var(--accent-amber)",
-                        fontWeight: 700,
-                        fontFamily: "var(--font-mono)",
-                      }}
-                    >
-                      <Award size={13} />
-                      <span>{edu.passingYearText}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              {/* Development Practices & AI Tools Card */}
-              <div
-                style={{
-                  background: "linear-gradient(135deg, rgba(255, 75, 38, 0.08) 0%, rgba(255, 170, 29, 0.04) 100%)",
-                  border: "1px solid var(--border-medium)",
-                  borderRadius: "16px",
-                  padding: "1.5rem",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    color: "var(--accent-vermillion)",
-                    fontFamily: "var(--font-mono)",
-                    marginBottom: "0.45rem",
-                    textTransform: "uppercase",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.4rem",
-                  }}
-                >
-                  <Sparkles size={13} color="var(--accent-vermillion)" />
-                  <span>AI-Assisted Development &amp; Practices</span>
-                </div>
-                <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#fff", marginBottom: "0.6rem" }}>
-                  Modern Development Tools &amp; Practices
-                </div>
-                <div style={{ fontSize: "0.85rem", color: "var(--text-slate)", lineHeight: 1.6, marginBottom: "0.75rem" }}>
-                  Worked with modern AI-assisted development tools to support coding, debugging, and development workflows:
-                </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", marginBottom: "0.95rem" }}>
-                  {["OpenAI Codex", "Claude Code", "Google Antigravity"].map((tool, i) => (
-                    <span
-                      key={i}
-                      style={{
-                        background: "rgba(0, 200, 229, 0.1)",
-                        border: "1px solid rgba(0, 200, 229, 0.3)",
-                        color: "var(--accent-cyan)",
-                        borderRadius: "6px",
-                        padding: "0.25rem 0.65rem",
-                        fontSize: "0.76rem",
-                        fontFamily: "var(--font-mono)",
-                        fontWeight: 600,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.35rem",
-                      }}
-                    >
-                      <Bot size={11} color="var(--accent-cyan)" />
-                      <span>{tool}</span>
-                    </span>
-                  ))}
-                </div>
-                <div style={{ fontSize: "0.82rem", color: "var(--text-muted)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: "0.45rem" }}>
-                  <Wrench size={13} color="var(--accent-amber)" style={{ flexShrink: 0, marginTop: "2px" }} />
-                  <div>
-                    <strong style={{ color: "var(--text-chalk)" }}>Core Practices:</strong> Git, Debugging, Troubleshooting, Application Maintenance, Performance Optimization, Version Control.
+                  <span>•</span>
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>{exp.location}</span>
                   </div>
                 </div>
               </div>
+
+              {/* Responsibilities bullets */}
+              <ul className="space-y-2 pt-1 text-sm sm:text-base text-[var(--color-text-muted)] max-w-3xl">
+                {exp.bullets.map((bullet, bIdx) => (
+                  <li key={bIdx} className="flex items-start gap-2.5">
+                    <span className="text-[var(--color-accent)] mt-1.5">•</span>
+                    <span className="leading-relaxed">{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Technologies */}
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                {exp.technologies.map((t) => (
+                  <span
+                    key={t}
+                    className="text-xs font-mono px-2.5 py-1 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)]"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

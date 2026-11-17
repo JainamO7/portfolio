@@ -1,138 +1,40 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Copy,
-  Check,
-  Send,
-  Sparkles,
-  AlertCircle,
-  CheckCircle2,
-  Loader2,
-  ArrowRight,
-  MessageSquare,
-  Lightbulb,
-} from "lucide-react";
-import { Github, Linkedin } from "@/components/icons/BrandIcons";
-import { playTactileClick } from "@/utils/sound";
+import { useState } from "react";
+import { Mail, Phone, Send, CheckCircle2, AlertCircle, Copy, Check, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Whatsapp } from "@/components/icons/BrandIcons";
+import { PERSONAL_INFO } from "@/data/projectsData";
 
 export default function ContactSection() {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-
-  // Email verification states
-  const [emailStatus, setEmailStatus] = useState<"idle" | "checking" | "valid" | "invalid" | "typo">("idle");
-  const [emailFeedback, setEmailFeedback] = useState<string>("");
-  const [suggestedEmail, setSuggestedEmail] = useState<string>("");
-  const [submitError, setSubmitError] = useState<string>("");
-
-  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
-
-  const email = "kikanijainam7@gmail.com";
-  const phone = "+91 7490075875";
 
   const handleCopyEmail = () => {
-    playTactileClick("pop");
-    navigator.clipboard.writeText(email);
+    navigator.clipboard.writeText(PERSONAL_INFO.email);
     setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2500);
+    setTimeout(() => setCopiedEmail(false), 2000);
   };
 
   const handleCopyPhone = () => {
-    playTactileClick("pop");
-    navigator.clipboard.writeText(phone);
+    navigator.clipboard.writeText(PERSONAL_INFO.phone);
     setCopiedPhone(true);
-    setTimeout(() => setCopiedPhone(false), 2500);
-  };
-
-  // Perform free domain & typo verification
-  const verifyEmail = async (emailToVerify: string): Promise<boolean> => {
-    const trimmed = emailToVerify.trim();
-    if (!trimmed || !trimmed.includes("@")) {
-      setEmailStatus("idle");
-      setEmailFeedback("");
-      setSuggestedEmail("");
-      return false;
-    }
-
-    setEmailStatus("checking");
-    setEmailFeedback("Verifying mail server & domain...");
-
-    try {
-      const res = await fetch("/api/verify-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: trimmed }),
-      });
-      const data = await res.json();
-
-      if (data.isTypo && data.suggestion) {
-        setEmailStatus("typo");
-        setEmailFeedback(data.message || `Did you mean @${data.suggestion.split("@")[1]}?`);
-        setSuggestedEmail(data.suggestion);
-        return false;
-      } else if (data.valid) {
-        setEmailStatus("valid");
-        setEmailFeedback(data.message || "Domain verified and active.");
-        setSuggestedEmail("");
-        return true;
-      } else {
-        setEmailStatus("invalid");
-        setEmailFeedback(data.message || "Invalid email address or domain.");
-        setSuggestedEmail("");
-        return false;
-      }
-    } catch {
-      setEmailStatus("valid");
-      setEmailFeedback("Format valid.");
-      return true;
-    }
-  };
-
-  const handleEmailChange = (val: string) => {
-    setFormData({ ...formData, email: val });
-
-    if (debounceTimer.current) clearTimeout(debounceTimer.current);
-
-    if (!val || val.length < 5 || !val.includes("@")) {
-      setEmailStatus("idle");
-      setEmailFeedback("");
-      setSuggestedEmail("");
-      return;
-    }
-
-    // Debounce DNS lookup by 600ms
-    debounceTimer.current = setTimeout(() => {
-      verifyEmail(val);
-    }, 600);
-  };
-
-  const applySuggestedEmail = () => {
-    if (suggestedEmail) {
-      playTactileClick("pop");
-      setFormData({ ...formData, email: suggestedEmail });
-      verifyEmail(suggestedEmail);
-    }
+    setTimeout(() => setCopiedPhone(false), 2000);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    playTactileClick("pop");
-    setSubmitError("");
+    setErrorMsg("");
 
-    setSubmitting(true);
-    const isValid = await verifyEmail(formData.email);
-
-    if (!isValid) {
-      setSubmitting(false);
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setErrorMsg("Please fill in all fields before sending.");
       return;
     }
+
+    setSubmitting(true);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -146,7 +48,7 @@ export default function ContactSection() {
           name: formData.name.trim(),
           email: formData.email.trim(),
           message: formData.message.trim(),
-          subject: `Portfolio Message from ${formData.name.trim()}`,
+          subject: `Portfolio Inquiry from ${formData.name.trim()}`,
           from_name: "Jainam Kikani Portfolio",
         }),
       });
@@ -155,592 +57,264 @@ export default function ContactSection() {
       setSubmitting(false);
 
       if (result.success) {
-        setFormSubmitted(true);
+        setSubmitted(true);
       } else {
-        setSubmitError(result.message || "Could not deliver email. Please try again or use direct email above.");
+        setErrorMsg(result.message || "Failed to send message. Please use direct email.");
       }
     } catch {
       setSubmitting(false);
-      // Resilient fallback: open mail client with message drafted
-      window.location.href = `mailto:${email}?subject=${encodeURIComponent(
+      // Fallback: trigger user's mail client directly
+      window.location.href = `mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
         `Portfolio Inquiry from ${formData.name}`
       )}&body=${encodeURIComponent(
-        `Hi Jainam,\n\n${formData.message}\n\nFrom: ${formData.name}\nEmail: ${formData.email}`
+        `Hello Jainam,\n\n${formData.message}\n\nFrom: ${formData.name}\nEmail: ${formData.email}`
       )}`;
-      setFormSubmitted(true);
+      setSubmitted(true);
     }
   };
 
   return (
-    <section
-      id="contact"
-      style={{
-        paddingTop: "clamp(4rem, 8vh, 7rem)",
-        paddingBottom: "clamp(5rem, 10vh, 9rem)",
-        position: "relative",
-      }}
-    >
-      <div className="main-container">
+    <section id="contact" className="py-20 border-b border-[var(--color-border)]">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              background: "rgba(255, 75, 38, 0.12)",
-              border: "1px solid var(--accent-vermillion-glow)",
-              borderRadius: "100px",
-              padding: "0.35rem 1rem",
-              marginBottom: "1rem",
-            }}
-          >
-            <Sparkles size={14} color="var(--accent-vermillion)" />
-            <span
-              style={{
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                color: "var(--accent-vermillion)",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                fontFamily: "var(--font-mono)",
-              }}
-            >
-              Direct Connect
-            </span>
-          </div>
-
-          <h2
-            style={{
-              fontSize: "clamp(2rem, 3.8vw, 3.5rem)",
-              fontWeight: 800,
-              lineHeight: 1.15,
-              marginBottom: "1rem",
-            }}
-          >
-            Let&apos;s build your next flagship app.
+        <div className="mb-14">
+          <p className="text-xs font-mono uppercase tracking-wider text-[var(--color-accent)] mb-2">
+            Contact
+          </p>
+          <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[var(--color-text-primary)]">
+            Get in touch.
           </h2>
-
-          <p
-            style={{
-              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
-              color: "var(--text-slate)",
-              maxWidth: "720px",
-              margin: "0 auto",
-            }}
-          >
-            Available for full-time Mobile Engineering roles, high-impact consulting, and Flutter architecture contracts.
+          <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+            Open for full-time opportunities, remote positions, and mobile project discussions.
           </p>
         </div>
 
-        {/* Contact Terminal Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(290px, 100%), 1fr))",
-            gap: "2.5rem",
-            maxWidth: "1060px",
-            margin: "0 auto",
-          }}
-        >
-          {/* Direct Details & One-Click Copy */}
-          <div
-            className="glass-panel"
-            style={{
-              padding: "clamp(1.75rem, 3vw, 2.5rem)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  fontSize: "0.8rem",
-                  fontWeight: 700,
-                  color: "var(--accent-emerald)",
-                  fontFamily: "var(--font-mono)",
-                  marginBottom: "0.6rem",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
-              >
-                CURRENTLY OPEN TO OPPORTUNITIES
-              </div>
-
-              <h3 style={{ fontSize: "1.6rem", fontWeight: 800, marginBottom: "1.5rem" }}>
-                Reach out directly
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Direct channels */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="p-5 sm:p-6 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-4">
+              <h3 className="text-xs font-mono uppercase tracking-wider text-[var(--color-text-subtle)]">
+                Direct Channels
               </h3>
 
-              {/* Email Card with Copy */}
-              <div
-                style={{
-                  background: "var(--bg-carbon)",
-                  border: "1px solid var(--border-medium)",
-                  borderRadius: "14px",
-                  padding: "1rem 1.2rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "1rem",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <div
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
-                      background: "rgba(255, 75, 38, 0.15)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "var(--accent-vermillion)",
-                    }}
+              {/* Email */}
+              <div className="flex items-center justify-between gap-3 text-sm">
+                <div className="flex items-center gap-2.5 truncate">
+                  <Mail className="w-4 h-4 text-[var(--color-accent)] flex-shrink-0" />
+                  <a
+                    href={`mailto:${PERSONAL_INFO.email}`}
+                    className="text-[var(--color-text-primary)] hover:underline truncate"
                   >
-                    <Mail size={18} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: "0.74rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                      PRIMARY EMAIL
-                    </div>
-                    <a
-                      href={`mailto:${email}`}
-                      style={{ fontSize: "0.95rem", fontWeight: 600, color: "#fff", textDecoration: "none" }}
-                    >
-                      {email}
-                    </a>
-                  </div>
+                    {PERSONAL_INFO.email}
+                  </a>
                 </div>
-
                 <button
                   onClick={handleCopyEmail}
-                  title="Copy email to clipboard"
-                  style={{
-                    background: copiedEmail ? "var(--accent-emerald)" : "var(--bg-elevated)",
-                    color: copiedEmail ? "#08090C" : "var(--text-chalk)",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "0.45rem 0.75rem",
-                    fontSize: "0.78rem",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.3rem",
-                    transition: "all 0.2s ease",
-                  }}
+                  aria-label="Copy email address"
+                  className="p-1.5 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
                 >
-                  {copiedEmail ? <Check size={14} /> : <Copy size={14} />}
-                  <span>{copiedEmail ? "Copied" : "Copy"}</span>
+                  {copiedEmail ? (
+                    <Check className="w-4 h-4 text-emerald-500" />
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
                 </button>
               </div>
 
-              {/* Phone Card with Copy */}
-              <div
-                style={{
-                  background: "var(--bg-carbon)",
-                  border: "1px solid var(--border-medium)",
-                  borderRadius: "14px",
-                  padding: "1rem 1.2rem",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "1rem",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                  <div
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
-                      background: "rgba(0, 214, 114, 0.15)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "var(--accent-emerald)",
-                    }}
+              {/* Phone / WhatsApp */}
+              <div className="flex items-center justify-between gap-3 text-sm">
+                <div className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 text-[var(--color-accent)] flex-shrink-0" />
+                  <a
+                    href={PERSONAL_INFO.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-text-primary)] hover:underline"
                   >
-                    <Phone size={18} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: "0.74rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                      PHONE / WHATSAPP
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
-                      <a
-                        href={`tel:${phone}`}
-                        style={{ fontSize: "0.95rem", fontWeight: 600, color: "#fff", textDecoration: "none" }}
-                      >
-                        {phone}
-                      </a>
-                      <a
-                        href="https://wa.me/917490075875"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          fontSize: "0.74rem",
-                          color: "var(--accent-emerald)",
-                          textDecoration: "none",
-                          fontFamily: "var(--font-mono)",
-                          background: "rgba(0, 214, 114, 0.1)",
-                          padding: "0.2rem 0.55rem",
-                          borderRadius: "6px",
-                          border: "1px solid rgba(0, 214, 114, 0.25)",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "0.35rem",
-                        }}
-                      >
-                        <MessageSquare size={13} />
-                        <span>WhatsApp</span>
-                      </a>
-                    </div>
-                  </div>
+                    {PERSONAL_INFO.phone}
+                  </a>
                 </div>
-
                 <button
                   onClick={handleCopyPhone}
-                  title="Copy phone to clipboard"
-                  style={{
-                    background: copiedPhone ? "var(--accent-emerald)" : "var(--bg-elevated)",
-                    color: copiedPhone ? "#08090C" : "var(--text-chalk)",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "0.45rem 0.75rem",
-                    fontSize: "0.78rem",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.3rem",
-                    transition: "all 0.2s ease",
-                  }}
+                  aria-label="Copy phone number"
+                  className="p-1.5 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
                 >
-                  {copiedPhone ? <Check size={14} /> : <Copy size={14} />}
-                  <span>{copiedPhone ? "Copied" : "Copy"}</span>
+                  {copiedPhone ? (
+                    <Check className="w-4 h-4 text-emerald-500" />
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
                 </button>
-              </div>
-
-              {/* Location Card */}
-              <div
-                style={{
-                  background: "var(--bg-carbon)",
-                  border: "1px solid var(--border-medium)",
-                  borderRadius: "14px",
-                  padding: "1rem 1.2rem",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                <div
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "10px",
-                    background: "rgba(255, 170, 29, 0.15)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "var(--accent-amber)",
-                  }}
-                >
-                  <MapPin size={18} />
-                </div>
-                <div>
-                  <div style={{ fontSize: "0.74rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                    LOCATION
-                  </div>
-                  <div style={{ fontSize: "0.95rem", fontWeight: 600, color: "#fff" }}>
-                    Bhavnagar, Gujarat, India (Remote or Relocation)
-                  </div>
-                </div>
               </div>
             </div>
 
-            {/* Social Links */}
-            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-              <a
-                href="https://github.com/JainamO7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary"
-                style={{ flex: 1, justifyContent: "center", fontSize: "0.88rem", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <Github size={16} />
-                <span>GitHub (JainamO7)</span>
-              </a>
+            {/* Social profiles */}
+            <div className="p-6 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] space-y-3.5">
+              <h3 className="text-xs font-mono uppercase tracking-wider text-[var(--color-text-subtle)]">
+                Profiles & Socials
+              </h3>
+              <div className="flex flex-col space-y-2.5">
+                <a
+                  href={PERSONAL_INFO.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-canvas)] hover:border-[var(--color-accent)]/50 hover:bg-[var(--color-surface)] text-[var(--color-text-primary)] transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] group-hover:border-[var(--color-accent)]/50 transition-colors">
+                      <Linkedin size={16} />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xs font-mono font-medium text-[var(--color-text-primary)]">LinkedIn</p>
+                      <p className="text-[11px] text-[var(--color-text-muted)]">jainam-kikani-678198230</p>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors" />
+                </a>
 
-              <a
-                href="https://www.linkedin.com/in/jainam-kikani-678198230/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary"
-                style={{ flex: 1, justifyContent: "center", fontSize: "0.88rem", color: "#0A66C2", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <Linkedin size={16} />
-                <span>LinkedIn Profile</span>
-              </a>
+                <a
+                  href={PERSONAL_INFO.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-canvas)] hover:border-[var(--color-accent)]/50 hover:bg-[var(--color-surface)] text-[var(--color-text-primary)] transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] group-hover:border-[var(--color-accent)]/50 transition-colors">
+                      <Github size={16} />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xs font-mono font-medium text-[var(--color-text-primary)]">GitHub</p>
+                      <p className="text-[11px] text-[var(--color-text-muted)]">github.com/JainamO7</p>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors" />
+                </a>
+
+                <a
+                  href={PERSONAL_INFO.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-canvas)] hover:border-[var(--color-accent)]/50 hover:bg-[var(--color-surface)] text-[var(--color-text-primary)] transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] group-hover:border-[var(--color-accent)]/50 transition-colors">
+                      <Whatsapp size={16} />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xs font-mono font-medium text-[var(--color-text-primary)]">WhatsApp</p>
+                      <p className="text-[11px] text-[var(--color-text-muted)]">+91 7490075875</p>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors" />
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Quick Message Transmission Card */}
-          <div
-            className="glass-panel"
-            style={{
-              padding: "clamp(1.75rem, 3vw, 2.5rem)",
-            }}
-          >
-            <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "0.5rem" }}>
-              Send an Instant Transmission
-            </h3>
-            <p style={{ fontSize: "0.88rem", color: "var(--text-slate)", marginBottom: "1.5rem" }}>
-              Need a project quote, mobile architecture review, or have an open role? Leave a message below.
-            </p>
-
-            {formSubmitted ? (
-              <div
-                style={{
-                  background: "rgba(0, 214, 114, 0.1)",
-                  border: "1px solid var(--accent-emerald)",
-                  borderRadius: "14px",
-                  padding: "2rem",
-                  textAlign: "center",
-                }}
-              >
-                <div
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "50%",
-                    background: "var(--accent-emerald)",
-                    color: "#08090C",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    margin: "0 auto 1rem auto",
-                  }}
-                >
-                  <Check size={24} />
-                </div>
-                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#fff", marginBottom: "0.4rem" }}>
-                  Message Sent Successfully!
-                </div>
-                <div style={{ fontSize: "0.88rem", color: "var(--text-slate)", lineHeight: 1.6, marginBottom: "1.2rem" }}>
-                  Thank you, <strong style={{ color: "#fff" }}>{formData.name}</strong>! Your message has been received. I will review it and reply to <strong style={{ color: "var(--accent-emerald)" }}>{formData.email}</strong> shortly.
-                </div>
-                <button
-                  onClick={() => {
-                    setFormSubmitted(false);
-                    setFormData({ name: "", email: "", message: "" });
-                    setEmailStatus("idle");
-                    setSubmitError("");
-                  }}
-                  className="btn-secondary"
-                  style={{ fontSize: "0.84rem", margin: "0 auto" }}
-                >
-                  Send Another Message
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                <div>
-                  <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text-chalk)", display: "block", marginBottom: "0.4rem" }}>
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Your Name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    style={{
-                      width: "100%",
-                      background: "var(--bg-carbon)",
-                      border: "1px solid var(--border-medium)",
-                      borderRadius: "10px",
-                      padding: "0.75rem 1rem",
-                      color: "#fff",
-                      fontSize: "0.9rem",
-                      outline: "none",
+          {/* Contact form */}
+          <div className="lg:col-span-7">
+            <div className="p-5 sm:p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]">
+              {submitted ? (
+                <div className="py-12 text-center space-y-4">
+                  <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-serif text-2xl font-medium text-[var(--color-text-primary)]">
+                    Message received.
+                  </h3>
+                  <p className="text-sm text-[var(--color-text-muted)] max-w-sm mx-auto">
+                    Thank you for reaching out. I will review your message and reply to {formData.email} shortly.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({ name: "", email: "", message: "" });
                     }}
-                  />
+                    className="text-xs font-mono text-[var(--color-accent)] hover:underline pt-2 inline-block"
+                  >
+                    Send another message
+                  </button>
                 </div>
-
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
-                    <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text-chalk)" }}>
-                      Email Address
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="space-y-1.5">
+                    <label
+                      htmlFor="contact-name"
+                      className="block text-xs font-mono text-[var(--color-text-primary)]"
+                    >
+                      Name
                     </label>
-                    {/* <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                      Live MX &amp; Typo Verification
-                    </span> */}
+                    <input
+                      id="contact-name"
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="Your name"
+                      className="w-full px-3.5 py-2.5 rounded-md border border-[var(--color-border)] bg-[var(--color-canvas)] text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-subtle)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                    />
                   </div>
 
-                  <div style={{ position: "relative" }}>
+                  <div className="space-y-1.5">
+                    <label
+                      htmlFor="contact-email"
+                      className="block text-xs font-mono text-[var(--color-text-primary)]"
+                    >
+                      Email address
+                    </label>
                     <input
+                      id="contact-email"
                       type="email"
                       required
-                      placeholder="your.email@domain.com"
                       value={formData.email}
-                      onChange={(e) => handleEmailChange(e.target.value)}
-                      onBlur={() => formData.email && verifyEmail(formData.email)}
-                      style={{
-                        width: "100%",
-                        background: "var(--bg-carbon)",
-                        border:
-                          emailStatus === "valid"
-                            ? "1px solid var(--accent-emerald)"
-                            : emailStatus === "invalid"
-                            ? "1px solid #FF3366"
-                            : emailStatus === "typo"
-                            ? "1px solid var(--accent-amber)"
-                            : "1px solid var(--border-medium)",
-                        borderRadius: "10px",
-                        padding: "0.75rem 2.5rem 0.75rem 1rem",
-                        color: "#fff",
-                        fontSize: "0.9rem",
-                        outline: "none",
-                        transition: "border-color 0.2s ease",
-                      }}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="your.email@example.com"
+                      className="w-full px-3.5 py-2.5 rounded-md border border-[var(--color-border)] bg-[var(--color-canvas)] text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-subtle)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
-
-                    {/* Status Icon */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        right: "0.9rem",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        pointerEvents: "none",
-                      }}
-                    >
-                      {emailStatus === "checking" && <Loader2 size={16} className="animate-spin" color="var(--accent-cyan)" />}
-                      {emailStatus === "valid" && <CheckCircle2 size={16} color="var(--accent-emerald)" />}
-                      {emailStatus === "invalid" && <AlertCircle size={16} color="#FF3366" />}
-                      {emailStatus === "typo" && <AlertCircle size={16} color="var(--accent-amber)" />}
-                    </div>
                   </div>
 
-                  {/* Typo Auto-Correction Prompt */}
-                  {emailStatus === "typo" && (
-                    <div
-                      style={{
-                        marginTop: "0.45rem",
-                        background: "rgba(255, 170, 29, 0.12)",
-                        border: "1px solid rgba(255, 170, 29, 0.35)",
-                        borderRadius: "8px",
-                        padding: "0.45rem 0.75rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        fontSize: "0.78rem",
-                        color: "var(--accent-amber)",
-                      }}
+                  <div className="space-y-1.5">
+                    <label
+                      htmlFor="contact-message"
+                      className="block text-xs font-mono text-[var(--color-text-primary)]"
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                        <Lightbulb size={14} color="var(--accent-amber)" style={{ flexShrink: 0 }} />
-                        <span>{emailFeedback}</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={applySuggestedEmail}
-                        style={{
-                          background: "var(--accent-amber)",
-                          color: "#08090C",
-                          border: "none",
-                          borderRadius: "6px",
-                          padding: "0.2rem 0.55rem",
-                          fontSize: "0.72rem",
-                          fontWeight: 700,
-                          cursor: "pointer",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "0.25rem",
-                        }}
-                      >
-                        <span>Fix to {suggestedEmail}</span>
-                        <ArrowRight size={11} />
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Feedback Message */}
-                  {emailStatus === "invalid" && (
-                    <div style={{ fontSize: "0.76rem", color: "#FF3366", marginTop: "0.35rem", display: "flex", alignItems: "center", gap: "0.3rem" }}>
-                      <AlertCircle size={13} />
-                      <span>{emailFeedback}</span>
-                    </div>
-                  )}
-
-                  {emailStatus === "valid" && (
-                    <div style={{ fontSize: "0.76rem", color: "var(--accent-emerald)", marginTop: "0.35rem", display: "flex", alignItems: "center", gap: "0.3rem" }}>
-                      <CheckCircle2 size={13} />
-                      <span>{emailFeedback}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div>
-                  <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text-chalk)", display: "block", marginBottom: "0.4rem" }}>
-                    Message / Project Details
-                  </label>
-                  <textarea
-                    rows={4}
-                    required
-                    placeholder="Tell me about your project, timeline, or inquiry..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    style={{
-                      width: "100%",
-                      background: "var(--bg-carbon)",
-                      border: "1px solid var(--border-medium)",
-                      borderRadius: "10px",
-                      padding: "0.75rem 1rem",
-                      color: "#fff",
-                      fontSize: "0.9rem",
-                      outline: "none",
-                      resize: "vertical",
-                    }}
-                  />
-                </div>
-
-                {submitError && (
-                  <div style={{ background: "rgba(255, 51, 102, 0.12)", border: "1px solid rgba(255, 51, 102, 0.35)", borderRadius: "8px", padding: "0.6rem 0.85rem", fontSize: "0.82rem", color: "#FF3366", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                    <AlertCircle size={15} />
-                    <span>{submitError}</span>
+                      Message
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      rows={5}
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Brief overview of your project, role, or inquiry..."
+                      className="w-full px-3.5 py-2.5 rounded-md border border-[var(--color-border)] bg-[var(--color-canvas)] text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-subtle)] focus:border-[var(--color-accent)] focus:outline-none transition-colors resize-y"
+                    />
                   </div>
-                )}
 
-                <button
-                  type="submit"
-                  disabled={submitting || emailStatus === "invalid" || emailStatus === "typo"}
-                  className="btn-primary"
-                  style={{
-                    justifyContent: "center",
-                    marginTop: "0.5rem",
-                    opacity: submitting || emailStatus === "invalid" || emailStatus === "typo" ? 0.6 : 1,
-                    cursor: submitting || emailStatus === "invalid" || emailStatus === "typo" ? "not-allowed" : "pointer",
-                  }}
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin" />
-                      <span>Verifying &amp; Transmitting...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send size={16} />
-                      <span>Transmit Direct Message</span>
-                    </>
+                  {errorMsg && (
+                    <div className="p-3 rounded-md bg-rose-500/10 border border-rose-500/20 text-xs text-rose-500 flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      <span>{errorMsg}</span>
+                    </div>
                   )}
-                </button>
-              </form>
-            )}
+
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-medium rounded-md bg-[var(--color-accent)] text-white dark:text-stone-900 hover:opacity-90 disabled:opacity-50 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                  >
+                    {submitting ? (
+                      <span>Sending message...</span>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Send message</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>

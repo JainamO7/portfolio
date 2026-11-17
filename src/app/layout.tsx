@@ -1,60 +1,57 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jainamkikani.dev"),
   title: {
-    default: "Jainam Kikani | Flutter & Mobile Application Developer",
+    default: "Jainam Kikani — Flutter & Mobile Application Developer",
     template: "%s | Jainam Kikani",
   },
   description:
-    "Portfolio of Jainam Kikani, Flutter Developer & Mobile Application Developer. Experienced in building and maintaining cross-platform mobile applications for Android and iOS across media streaming, payments (Stripe, NMI), WebSockets, and AI-assisted tools (OpenAI Codex, Claude Code, Google Antigravity).",
-  keywords: [
-    "Jainam Kikani",
-    "Flutter Developer",
-    "Mobile Application Developer",
-    "Android iOS Flutter",
-    "Adite Technologies",
-    "JDK Group",
-    "VideoFlex Video Player",
-    "Audify Music Player",
-    "Quetal",
-    "Dealer Management SaaS",
-    "BRMS Medical Representative Management",
-    "Smart IoT Alarm",
-    "Study Unify",
-    "GetX",
-    "MobX",
-    "MVVM Architecture",
-    "Stripe",
-    "NMI",
-    "WebSockets",
-    "OpenAI Codex",
-    "Claude Code",
-    "Google Antigravity",
-  ],
+    "Flutter developer building cross-platform Android and iOS apps across media, payments, education, and IoT. Open to opportunities.",
   authors: [{ name: "Jainam Kikani", url: "https://github.com/JainamO7" }],
   creator: "Jainam Kikani",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/icon.svg", type: "image/svg+xml" },
     ],
     apple: "/favicon.svg",
-    shortcut: "/favicon.svg",
   },
   openGraph: {
-    title: "Jainam Kikani | Flutter & Mobile Application Developer",
+    title: "Jainam Kikani — Flutter & Mobile Application Developer",
     description:
-      "Cross-platform mobile developer with 1 year professional experience engineering production Flutter applications for Android & iOS across streaming, FinTech, SaaS, and EdTech.",
+      "Flutter developer building cross-platform Android and iOS apps across media, payments, education, and IoT.",
     type: "website",
     locale: "en_US",
     siteName: "Jainam Kikani Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jainam Kikani | Flutter & Mobile Application Developer",
+    title: "Jainam Kikani — Flutter & Mobile Application Developer",
     description:
-      "Cross-platform mobile developer with 1 year professional experience engineering production Flutter applications for Android & iOS.",
+      "Flutter developer building cross-platform Android and iOS apps across media, payments, education, and IoT.",
   },
 };
 
@@ -62,8 +59,27 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#090A0D",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FBFBFA" },
+    { media: "(prefers-color-scheme: dark)", color: "#121110" },
+  ],
 };
+
+const themeScript = `
+  (function() {
+    try {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (e) {}
+  })();
+`;
 
 export default function RootLayout({
   children,
@@ -71,16 +87,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
-        <link rel="apple-touch-icon" href="/favicon.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body suppressHydrationWarning>
-        <div className="ambient-glow-1" />
-        <div className="ambient-glow-2" />
+      <body className="min-h-screen bg-[var(--color-canvas)] text-[var(--color-text-primary)] antialiased selection:bg-[var(--color-accent-subtle)] selection:text-[var(--color-accent)] font-sans">
         {children}
       </body>
     </html>

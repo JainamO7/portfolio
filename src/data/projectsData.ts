@@ -1,330 +1,405 @@
-export interface Project {
-  id: string;
-  title: string;
-  subtitle: string;
-  category: "Media & Streaming" | "FinTech & SaaS" | "EdTech" | "Healthcare" | "IoT & Hardware";
-  company?: string;
-  role: string;
-  overview: string;
-  metrics: string[];
-  technologies: string[];
-  keyFeatures: string[];
-  architecturalHighlights: string[];
-  defaultDevice: "mobile" | "tablet" | "monitor";
-  screenshotUrl?: string;
-  gallery?: { label: string; url: string }[];
-  liveUrl?: string;
-  appDetails: {
-    themeColor: string;
-    accentColor: string;
-    platform: "Android & iOS" | "Cross-Platform" | "Google Play";
-    status: "Production" | "Shipped" | "Live Client App";
-  };
+export interface ProjectScreenshot {
+  url: string;
+  label: string;
+  alt: string;
 }
 
-export const PROJECTS: Project[] = [
+export interface CaseStudy {
+  slug: string;
+  title: string;
+  platform: string;
+  company: string;
+  role: string;
+  oneLiner: string;
+  overview: string;
+  whatIBuilt: string[];
+  challenges: string[];
+  technologies: string[];
+  links?: {
+    label: string;
+    url: string;
+  }[];
+  screenshots: ProjectScreenshot[];
+}
+
+export interface ClientProject {
+  id: string;
+  title: string;
+  platform: string;
+  company: string;
+  role: string;
+  oneLiner: string;
+  technologies: string[];
+  features: string[];
+  ndaNote?: string;
+  playStoreLink?: string;
+  screenshots: ProjectScreenshot[];
+}
+
+export const PERSONAL_INFO = {
+  name: "Jainam Kikani",
+  title: "Flutter Developer | Mobile Application Developer",
+  location: "Bhavnagar, Gujarat, India",
+  locationNotice: "Open to remote or relocation",
+  email: "kikanijainam7@gmail.com",
+  phone: "+91 7490075875",
+  whatsappUrl: "https://wa.me/917490075875",
+  linkedinUrl: "https://www.linkedin.com/in/jainam-kikani-678198230/",
+  githubUrl: "https://github.com/JainamO7",
+  resumePath: "/Jainam_Kikani_Resume.pdf",
+  summaryHeadline:
+    "Flutter developer building cross-platform Android and iOS apps for media, payments, education, and IoT.",
+  aboutParagraphs: [
+    "I am a Flutter developer with hands-on experience shipping cross-platform applications for Android and iOS across education, media playback, payment workflows, and IoT hardware companions. My daily work revolves around reliable state management with GetX and MobX, secure payment integrations with Stripe and NMI, and real-time connectivity using WebSockets and REST APIs.",
+    "I focus on writing clean, maintainable Dart code and creating responsive user interfaces that feel native on every screen. In my development workflow, I regularly use AI-assisted tools like Claude Code, OpenAI Codex, and Google Antigravity to speed up implementation, trace bugs, and refine application logic.",
+  ],
+};
+
+export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: "quetal",
-    title: "Quetal — Android & iOS",
-    subtitle: "Mobile Application with Stripe Payment Integration",
-    category: "FinTech & SaaS",
+    slug: "videoflex",
+    title: "VideoFlex Video Player",
+    platform: "Android & iOS",
     company: "Adite Technologies LLP",
-    role: "Flutter Developer / App Developer",
+    role: "Flutter Developer",
+    oneLiner:
+      "Cross-platform mobile video player with category feeds, short videos, offline downloads, and multilingual support.",
     overview:
-      "Worked on the Flutter application for Android and iOS. Integrated or maintained Stripe payment functionality, contributing to mobile application features, API integration, and ongoing maintenance.",
-    metrics: ["Stripe Payment Integration", "Android & iOS", "Play Store Link"],
-    technologies: ["Flutter", "Dart", "Stripe", "REST APIs", "GetX"],
-    keyFeatures: [
-      "Worked on the Flutter application for Android and iOS (Play Store Link)",
-      "Integrated and maintained Stripe payment functionality",
-      "Contributed to mobile application features, API integration, and maintenance",
-      "Designed responsive UI flows for plan selection, SIM activation, and checkout",
+      "VideoFlex is a video playback application built for Android and iOS. It provides organized video catalogues by category and subcategory, a feed for short videos, offline media downloads, and customizable viewing themes.",
+    whatIBuilt: [
+      "Built video playback workflows with category, subcategory, and recently played sections.",
+      "Developed short videos browsing interface with dedicated vertical playback controls.",
+      "Implemented live video search, offline video downloads, and playback controls.",
+      "Integrated push notifications and multilingual language support.",
+      "Built responsive user interfaces supporting both light and dark themes.",
+      "Integrated REST APIs with JSON parsing for remote catalog and video data.",
     ],
-    architecturalHighlights: [
-      "Secure Stripe payment gateway integration with tokenized transactions",
-      "GetX state management for reactive form validation and multi-step activation",
+    challenges: [
+      "Ensuring responsive playback controls and smooth state transitions between catalogue browsing and fullscreen video.",
+      "Managing local video storage reliably while keeping playback status synchronized with local SQLite storage.",
     ],
-    defaultDevice: "mobile",
-    screenshotUrl: "/screenshots/quetal/quetal-checkout.png",
-    gallery: [
-      { label: "SIM Checkout", url: "/screenshots/quetal/quetal-checkout.png" },
-      { label: "Plan & Roaming", url: "/screenshots/quetal/quetal-plan.png" },
-      { label: "IMEI Compatibility", url: "/screenshots/quetal/quetal-compatibility.png" },
-      { label: "Language Switcher", url: "/screenshots/quetal/quetal-language.png" },
-      { label: "Subscriber Profile", url: "/screenshots/quetal/quetal-profile.png" },
+    technologies: ["Flutter", "Dart", "REST APIs", "GetX", "Video Playback", "SQLite"],
+    links: [
+      {
+        label: "View on CodeCanyon",
+        url: "https://codecanyon.net/item/online-offline-android-video-player/22633586?s_rank=1",
+      },
     ],
-    appDetails: {
-      themeColor: "#EF4444",
-      accentColor: "#0D9488",
-      platform: "Android & iOS",
-      status: "Production",
-    },
+    screenshots: [],
+  },
+  {
+    slug: "audify",
+    title: "Audify Music Player",
+    platform: "Android & iOS",
+    company: "Adite Technologies LLP",
+    role: "Flutter Developer",
+    oneLiner:
+      "Mobile audio player featuring audio equalizer controls, playlists, synced lyrics, and offline playback.",
+    overview:
+      "Audify Music Player is a cross-platform mobile music player for Android and iOS. It provides local and online music playback, equalizer adjustments, playlist curation, and synced lyrics display.",
+    whatIBuilt: [
+      "Built and maintained music playback controls, repeat, shuffle, and background playback handling.",
+      "Built and maintained the audio equalizer interface and frequency adjustments.",
+      "Implemented synced lyrics display, artist sections, playlists, and offline music caching.",
+      "Integrated Firebase Cloud Messaging (FCM) for push notifications and AdMob where applicable.",
+      "Supported theme customization and responsive layout rendering across mobile screen sizes.",
+    ],
+    challenges: [
+      "Managing uninterrupted background audio playback lifecycles across different Android and iOS battery-saver policies.",
+      "Coordinating low-latency equalizer parameter changes with MobX reactive state management.",
+    ],
+    technologies: ["Flutter", "Dart", "MobX", "Audio Equalizer", "Firebase FCM", "AdMob"],
+    links: [
+      {
+        label: "View on CodeCanyon",
+        url: "https://codecanyon.net/item/online-audio-player/22045856?s_rank=2",
+      },
+    ],
+    screenshots: [],
+  },
+  {
+    slug: "study-unify",
+    title: "Study Unify (Student App & Admin)",
+    platform: "Android (Google Play)",
+    company: "JDK Group",
+    role: "Flutter Developer",
+    oneLiner:
+      "Educational ecosystem apps published on Google Play for students, teachers, and administrators.",
+    overview:
+      "Study Unify is an educational mobile platform consisting of a dedicated Student App for coursework, assignments, and offline learning, alongside an Admin App for institutional content and user management.",
+    whatIBuilt: [
+      "Built and maintained mobile application features for students and teachers with a responsive UI in the Student App.",
+      "Integrated REST APIs via HTTP, structured state management with GetX, and local persistence with SQLite.",
+      "Built administration features in the Study Unify Admin application using Flutter and GetX for user and content management.",
+      "Supported application maintenance and updates published on the Google Play Store.",
+    ],
+    challenges: [
+      "Providing dependable offline access to educational materials using SQLite local storage with remote synchronization.",
+      "Organizing large form workflows and permission states cleanly between student and administrative contexts.",
+    ],
+    technologies: ["Flutter", "Dart", "HTTP REST APIs", "GetX", "SQLite", "Google Play"],
+    links: [
+      {
+        label: "Student App on Google Play",
+        url: "https://play.google.com/store/apps/details?id=com.jdkgroup.study",
+      },
+      {
+        label: "Admin App on Google Play",
+        url: "https://play.google.com/store/apps/details?id=com.jdkgroup.studyunifyadmin",
+      },
+    ],
+    screenshots: [],
+  },
+];
+
+export const CLIENT_PROJECTS: ClientProject[] = [
+  {
+    id: "smart-iot-alarm",
+    title: "Smart IoT Alarm",
+    platform: "Android & iOS",
+    company: "Adite Technologies LLP",
+    role: "Flutter Developer",
+    oneLiner:
+      "Companion mobile app for a connected IoT alarm product with real-time hardware status, scheduling, and device alerts.",
+    technologies: ["Flutter", "Dart", "WebSockets", "REST APIs", "GetX"],
+    features: [
+      "Developed and maintained the Flutter companion app for a connected hardware alarm product.",
+      "Implemented real-time device status monitoring and WebSocket communication.",
+      "Built multi-profile alarm scheduling, ring duration controls, and announcement management.",
+      "Connected device alerts and network synchronization.",
+    ],
+    ndaNote: "Client work — features described under project requirements.",
+    playStoreLink: "https://play.google.com/store/apps/details?id=com.adioteq.smartiotalarm",
+    screenshots: [
+      {
+        url: "/screenshots/alarm/alarm-dashboard.png",
+        label: "IoT Dashboard",
+        alt: "Smart IoT Alarm hardware status dashboard",
+      },
+      {
+        url: "/screenshots/alarm/alarm-announcement.png",
+        label: "Live Announcement",
+        alt: "Smart IoT Alarm live audio announcement broadcast screen",
+      },
+      {
+        url: "/screenshots/alarm/alarm-alerts.png",
+        label: "Device Alerts",
+        alt: "Smart IoT Alarm device alert notifications screen",
+      },
+      {
+        url: "/screenshots/alarm/alarm-login.png",
+        label: "Device Sign In",
+        alt: "Smart IoT Alarm device authentication screen",
+      },
+      {
+        url: "/screenshots/alarm/alarm-splash.png",
+        label: "Splash Screen",
+        alt: "Smart IoT Alarm application splash screen",
+      },
+    ],
   },
   {
     id: "dealer-saas",
     title: "Dealer Management SaaS",
-    subtitle: "Mobile Recharge Services, US Carriers & Dealer Product Sales",
-    category: "FinTech & SaaS",
+    platform: "Android & iOS",
     company: "Adite Technologies LLP",
-    role: "Flutter Developer / App Developer",
-    overview:
-      "Worked on a dealer management solution supporting mobile recharge services, US carriers, and dealer product sales. Contributed to supplier management and related dealer workflows with Stripe & NMI payment integrations and WebSocket real-time communication.",
-    metrics: ["Stripe & NMI Payments", "WebSockets Real-Time", "Supplier & Dealer Workflows"],
+    role: "Flutter Developer",
+    oneLiner:
+      "Mobile solution for mobile recharge services, US carrier workflows, dealer product sales, and dual payment gateways.",
     technologies: ["Flutter", "Dart", "Stripe", "NMI", "WebSockets", "GetX", "REST APIs"],
-    keyFeatures: [
-      "Worked on a dealer management solution supporting mobile recharge services, US carriers, and dealer product sales",
-      "Contributed to supplier management and related dealer workflows",
-      "Worked with Stripe and NMI payment gateway integrations",
-      "Worked with WebSocket-related functionality for real-time communication",
-      "Engineered responsive dealer dashboards and POS checkout workflows",
+    features: [
+      "Built mobile features supporting recharge services, US carrier packages, and dealer product sales.",
+      "Integrated Stripe and NMI payment gateways for card transactions.",
+      "Implemented WebSocket functionality for real-time sales and status communication.",
+      "Contributed to supplier management and dealer activation workflows.",
     ],
-    architecturalHighlights: [
-      "Dual payment gateway integration (Stripe & NMI) for card processing and transactions",
-      "Real-time WebSocket event bus handling live dealer sales updates and recharge status",
+    ndaNote: "Client work — features described under project requirements.",
+    screenshots: [
+      {
+        url: "/screenshots/dealer/dealer-dashboard.png",
+        label: "Sales Dashboard",
+        alt: "Dealer SaaS sales and KPI dashboard screen",
+      },
+      {
+        url: "/screenshots/dealer/dealer-carriers.png",
+        label: "Carrier Directory",
+        alt: "Dealer SaaS US carrier selection screen",
+      },
+      {
+        url: "/screenshots/dealer/dealer-activation-cart.png",
+        label: "Activation Cart",
+        alt: "Dealer SaaS activation cart and POS checkout screen",
+      },
+      {
+        url: "/screenshots/dealer/dealer-tools.png",
+        label: "Carrier Tools",
+        alt: "Dealer SaaS carrier management tools",
+      },
+      {
+        url: "/screenshots/dealer/dealer-signin.png",
+        label: "Dealer Sign In",
+        alt: "Dealer SaaS secure dealer authentication screen",
+      },
     ],
-    defaultDevice: "monitor",
-    screenshotUrl: "/screenshots/dealer/dealer-dashboard.png",
-    gallery: [
-      { label: "Sales & KPI Dashboard", url: "/screenshots/dealer/dealer-dashboard.png" },
-      { label: "Carrier Directory", url: "/screenshots/dealer/dealer-carriers.png" },
-      { label: "Activation & POS Cart", url: "/screenshots/dealer/dealer-activation-cart.png" },
-      { label: "Carrier Dealer Tools", url: "/screenshots/dealer/dealer-tools.png" },
-      { label: "Dealer Sign In", url: "/screenshots/dealer/dealer-signin.png" },
-    ],
-    appDetails: {
-      themeColor: "#0066FF",
-      accentColor: "#10B981",
-      platform: "Cross-Platform",
-      status: "Live Client App",
-    },
   },
   {
-    id: "videoflex",
-    title: "VideoFlex Video Player",
-    subtitle: "Video Playback & Short Videos — Android & iOS",
-    category: "Media & Streaming",
-    company: "Adite Technologies LLP | CodeCanyon",
-    role: "Flutter Developer / App Developer",
-    overview:
-      "Developed and maintained the Flutter mobile application (VideoFlex Video Player by AditeTechnologies | CodeCanyon). Worked with video playback, categories and subcategories, recently played content, and short videos with offline downloads and multilingual support.",
-    metrics: ["Video Playback Engine", "Offline Downloads", "Light & Dark Themes"],
-    technologies: ["Flutter", "Dart", "REST API", "GetX", "Video Playback", "SQLite"],
-    keyFeatures: [
-      "Developed and maintained the Flutter mobile application for Android & iOS",
-      "Worked with video playback, categories and subcategories, recently played content, and short videos",
-      "Worked on live search, offline downloads, playback controls, notifications, and multilingual support",
-      "Supported light and dark themes and responsive user interfaces",
-      "Integrated REST APIs and implemented features based on project requirements",
+    id: "quetal",
+    title: "Quetal",
+    platform: "Android & iOS",
+    company: "Adite Technologies LLP",
+    role: "Flutter Developer",
+    oneLiner:
+      "Cross-platform mobile application featuring Stripe payment integration, SIM plan management, and REST API workflows.",
+    technologies: ["Flutter", "Dart", "Stripe", "REST APIs", "GetX"],
+    features: [
+      "Integrated and maintained Stripe payment functionality for mobile transactions.",
+      "Built mobile application features for plan and roaming selection, SIM activation, and checkout.",
+      "Implemented IMEI compatibility checking and multi-language switcher.",
+      "Integrated REST APIs for subscriber profiles and account information.",
     ],
-    architecturalHighlights: [
-      "Efficient local storage caching and state management with GetX",
-      "Responsive UI rendering across various Android & iOS screen form factors",
+    ndaNote: "Client work — features described under project requirements.",
+    playStoreLink: "https://play.google.com/store/apps/details?id=com.prepaidiq.quetal",
+    screenshots: [
+      {
+        url: "/screenshots/quetal/quetal-checkout.png",
+        label: "Checkout Flow",
+        alt: "Quetal checkout and payment screen showing Stripe integration",
+      },
+      {
+        url: "/screenshots/quetal/quetal-plan.png",
+        label: "Plan & Roaming",
+        alt: "Quetal mobile plan and roaming selection screen",
+      },
+      {
+        url: "/screenshots/quetal/quetal-compatibility.png",
+        label: "IMEI Compatibility",
+        alt: "Quetal device IMEI compatibility check screen",
+      },
+      {
+        url: "/screenshots/quetal/quetal-language.png",
+        label: "Language Switcher",
+        alt: "Quetal multi-language selection interface",
+      },
+      {
+        url: "/screenshots/quetal/quetal-profile.png",
+        label: "Subscriber Profile",
+        alt: "Quetal subscriber account and profile screen",
+      },
     ],
-    defaultDevice: "mobile",
-    screenshotUrl: "",
-    liveUrl: "https://codecanyon.net/item/online-offline-android-video-player/22633586",
-    appDetails: {
-      themeColor: "#FF3366",
-      accentColor: "#FF5E7E",
-      platform: "Android & iOS",
-      status: "Production",
-    },
-  },
-  {
-    id: "audify",
-    title: "Audify Music Player",
-    subtitle: "Music Playback & Audio Equalizer — Android & iOS",
-    category: "Media & Streaming",
-    company: "Adite Technologies LLP | CodeCanyon",
-    role: "Flutter Developer / App Developer",
-    overview:
-      "Developed and maintained the Flutter music-player application (Audify Music Player by AditeTechnologies | CodeCanyon). Worked on music playback controls, audio equalizer functionality, synced lyrics, and offline music features.",
-    metrics: ["Audio Equalizer", "Background Playback", "Synced Lyrics Engine"],
-    technologies: ["Flutter", "Dart", "MobX", "Audio Equalizer", "Firebase FCM", "AdMob"],
-    keyFeatures: [
-      "Developed and maintained the Flutter music-player application for Android & iOS",
-      "Worked on music playback controls, playlists, artist sections, and offline music features",
-      "Worked on audio equalizer functionality and its maintenance",
-      "Contributed to features involving synced lyrics, repeat and shuffle, background playback, notifications, and theme customization",
-      "Worked with Firebase Cloud Messaging (FCM) and AdMob where applicable",
-    ],
-    architecturalHighlights: [
-      "Reactive state management using MobX observables and actions",
-      "Native background audio playback lifecycle and equalizer parameter handling",
-    ],
-    defaultDevice: "mobile",
-    screenshotUrl: "",
-    liveUrl: "https://codecanyon.net/item/online-audio-player/22045856?s_rank=2",
-    appDetails: {
-      themeColor: "#00E5FF",
-      accentColor: "#18FFFF",
-      platform: "Android & iOS",
-      status: "Production",
-    },
   },
   {
     id: "brms-medical",
     title: "BRMS — Medical Representative Management",
-    subtitle: "Doctor Appointment Management & Scheduling Workflows",
-    category: "Healthcare",
+    platform: "Android & iOS",
     company: "Adite Technologies LLP",
-    role: "Flutter Developer / App Developer",
-    overview:
-      "Worked on an application designed for medical representatives. Supported doctor appointment management, scheduling, and availability-checking workflows for authorized users.",
-    metrics: ["Doctor Appointment Management", "Scheduling Workflows", "Authorized Access Control"],
+    role: "Flutter Developer",
+    oneLiner:
+      "Mobile application supporting doctor appointment management, scheduling, and availability-checking workflows.",
     technologies: ["Flutter", "Dart", "REST APIs", "MVVM", "GetX"],
-    keyFeatures: [
-      "Worked on an application designed for medical representatives (BRMS)",
-      "Supported doctor appointment management, scheduling, and availability-checking workflows",
-      "Contributed to application functionality for authorized users",
-      "Integrated REST APIs with JSON parsing for doctor schedules and clinic timings",
+    features: [
+      "Built and maintained doctor appointment management and scheduling workflows for authorized users.",
+      "Implemented real-time doctor availability checking and appointment booking.",
+      "Integrated REST APIs with JSON parsing for doctor directories and visit history.",
+      "Structured application logic using MVVM architecture and GetX state controllers.",
     ],
-    architecturalHighlights: [
-      "MVVM software architecture maintaining clean separation between views and business logic",
-      "GetX reactive controller bindings for dynamic appointment slot availability",
+    ndaNote: "Client work — features described under project requirements.",
+    screenshots: [
+      {
+        url: "/screenshots/bmra/bmra-doctor-list.png",
+        label: "Doctor Directory",
+        alt: "BRMS doctor directory and search list screen",
+      },
+      {
+        url: "/screenshots/bmra/bmra-doctor-details.png",
+        label: "Doctor Details",
+        alt: "BRMS doctor profile and clinic schedule screen",
+      },
+      {
+        url: "/screenshots/bmra/bmra-history.png",
+        label: "Appointment History",
+        alt: "BRMS medical rep appointment history screen",
+      },
+      {
+        url: "/screenshots/bmra/bmra-booking.png",
+        label: "Service Booking",
+        alt: "BRMS doctor appointment slot booking screen",
+      },
+      {
+        url: "/screenshots/bmra/bmra-profile.png",
+        label: "MR Profile",
+        alt: "BRMS medical representative profile screen",
+      },
     ],
-    defaultDevice: "mobile",
-    screenshotUrl: "/screenshots/bmra/bmra-doctor-list.png",
-    gallery: [
-      { label: "Doctor Directory", url: "/screenshots/bmra/bmra-doctor-list.png" },
-      { label: "Doctor Details", url: "/screenshots/bmra/bmra-doctor-details.png" },
-      { label: "Appointment History", url: "/screenshots/bmra/bmra-history.png" },
-      { label: "Service Booking", url: "/screenshots/bmra/bmra-booking.png" },
-      { label: "MR Profile", url: "/screenshots/bmra/bmra-profile.png" },
-    ],
-    appDetails: {
-      themeColor: "#0EA5E9",
-      accentColor: "#38BDF8",
-      platform: "Android & iOS",
-      status: "Production",
-    },
-  },
-  {
-    id: "smart-iot-alarm",
-    title: "Smart IoT Alarm",
-    subtitle: "Connected Alarm & IoT Mobile Application (Play Store Link)",
-    category: "IoT & Hardware",
-    company: "Adite Technologies LLP",
-    role: "Flutter Developer / App Developer",
-    overview:
-      "Worked on the Flutter mobile application associated with a connected alarm/IoT product (Play Store Link). Contributed to mobile application development and maintenance according to project requirements.",
-    metrics: ["IoT Connected Alarm", "WebSockets Telemetry", "Play Store Link"],
-    technologies: ["Flutter", "Dart", "WebSockets", "REST APIs", "GetX"],
-    keyFeatures: [
-      "Worked on the Flutter mobile application associated with a connected alarm/IoT product",
-      "Contributed to mobile application development and maintenance according to project requirements",
-      "Supported real-time hardware status monitoring, ringing, and device configuration",
-      "Integrated WebSocket communication for instant device telemetry and alerts",
-    ],
-    architecturalHighlights: [
-      "WebSocket stream handlers ensuring low-latency communication with connected IoT units",
-      "Clean UI component design optimized for quick one-tap physical hardware control",
-    ],
-    defaultDevice: "mobile",
-    screenshotUrl: "/screenshots/alarm/alarm-dashboard.png",
-    gallery: [
-      { label: "IoT Dashboard", url: "/screenshots/alarm/alarm-dashboard.png" },
-      { label: "Live Announcement", url: "/screenshots/alarm/alarm-announcement.png" },
-      { label: "Device Alerts & Sync", url: "/screenshots/alarm/alarm-alerts.png" },
-      { label: "Sign In", url: "/screenshots/alarm/alarm-login.png" },
-      { label: "Splash Screen", url: "/screenshots/alarm/alarm-splash.png" },
-    ],
-    appDetails: {
-      themeColor: "#0066FF",
-      accentColor: "#00E5FF",
-      platform: "Android & iOS",
-      status: "Production",
-    },
-  },
-  {
-    id: "study-unify",
-    title: "Study Unify (Student App & Admin)",
-    subtitle: "Educational Ecosystem by JDK Group — Published on Google Play",
-    category: "EdTech",
-    company: "JDK Group",
-    role: "Application Developer / Flutter Developer",
-    overview:
-      "Developed and maintained Flutter application features for students and teachers in the Study Unify Student App, and worked on the Study Unify Admin application using GetX, published on Google Play.",
-    metrics: ["Published on Google Play", "Offline SQLite Storage", "GetX State Management"],
-    technologies: ["Flutter", "Dart", "REST APIs", "HTTP", "GetX", "SQLite", "Google Play"],
-    keyFeatures: [
-      "Study Unify — Student App: Developed and maintained Flutter application features for students and teachers",
-      "Integrated REST APIs using HTTP, GetX state management, and SQLite local storage",
-      "Study Unify Admin: Worked on the Flutter administration application supporting the Study Unify platform using GetX",
-      "Student App on Google Play: https://play.google.com/store/apps/details?id=com.jdkgroup.study",
-      "Admin App on Google Play: https://play.google.com/store/apps/details?id=com.jdkgroup.studyunifyadmin",
-    ],
-    architecturalHighlights: [
-      "SQLite local storage integration enabling offline access to study materials",
-      "GetX reactive dependency injection and navigation architecture",
-    ],
-    defaultDevice: "tablet",
-    screenshotUrl: "",
-    liveUrl: "https://play.google.com/store/apps/details?id=com.jdkgroup.study",
-    appDetails: {
-      themeColor: "#F59E0B",
-      accentColor: "#FBBF24",
-      platform: "Google Play",
-      status: "Shipped",
-    },
   },
 ];
 
 export const WORK_EXPERIENCE = [
   {
-    role: "Flutter Developer / App Developer",
+    role: "Flutter Developer",
     company: "Adite Technologies LLP",
-    period: "1 Year Experience",
+    dates: "Aug 2025 – Oct 2026",
     location: "Bhavnagar, Gujarat, India",
-    summary:
-      "Developed and maintained cross-platform Flutter mobile applications for Android and iOS across media streaming, FinTech payments, dealer management, appointment management, and IoT-connected products.",
-    highlights: [
-      "Developed and maintained Flutter mobile applications for Android and iOS.",
-      "Integrated REST APIs and implemented application features based on project requirements.",
-      "Worked on video playback, music playback, application state management, payment integration, and user-interface development.",
-      "Contributed to application maintenance, debugging, and feature improvements.",
-      "Worked with AI-assisted development tools to support coding, debugging, and development workflows.",
+    bullets: [
+      "Built and maintained Flutter apps for Android and iOS, from UI development to API integration and release support.",
+      "Implemented payment flows with Stripe and NMI and real-time communication using WebSockets.",
+      "Delivered media features: video and music playback, offline downloads, background playback, and push notifications.",
+      "Debugged production issues and improved app stability and performance.",
     ],
-    keyProjects: [
-      "VideoFlex Video Player — Android & iOS",
-      "Audify Music Player — Android & iOS",
-      "Quetal — Android & iOS",
-      "Dealer Management SaaS",
-      "BRMS — Medical Representative Management",
-      "Smart IoT Alarm",
+    technologies: ["Flutter", "Dart", "Stripe", "NMI", "WebSockets", "GetX", "MobX", "SQLite", "Firebase FCM"],
+  },
+  {
+    role: "Flutter Developer",
+    company: "JDK Group",
+    dates: "Feb 2024 – Jul 2025",
+    location: "India",
+    bullets: [
+      "Built and maintained features for the Study Unify apps published on Google Play.",
+      "Integrated REST APIs via HTTP, structured state management using GetX, and handled SQLite local storage.",
+      "Supported the Study Unify Admin application using Flutter and GetX for managing content and users.",
     ],
-    technologies: [
-      "Flutter",
-      "Dart",
-      "REST API",
-      "GetX",
-      "MobX",
-      "MVVM",
-      "SQLite",
-      "Firebase",
+    technologies: ["Flutter", "Dart", "HTTP", "GetX", "SQLite", "Google Play"],
+  },
+];
+
+export const TECHNICAL_SKILLS = [
+  {
+    category: "Mobile",
+    skills: ["Flutter", "Dart", "Android", "iOS", "Responsive UI"],
+  },
+  {
+    category: "Architecture",
+    skills: ["GetX", "MobX", "MVVM"],
+  },
+  {
+    category: "Integrations",
+    skills: [
+      "REST APIs",
+      "JSON parsing",
       "WebSockets",
       "Stripe",
       "NMI",
+      "Firebase Cloud Messaging",
+      "AdMob",
     ],
   },
   {
-    role: "Application Developer / Flutter Developer",
-    company: "JDK Group",
-    period: "Google Play Shipped",
-    location: "India",
-    summary:
-      "Developed and maintained Flutter application features for students, educators, and administrative personnel across the Study Unify platform published on Google Play.",
-    highlights: [
-      "Developed and maintained Flutter application features for students and teachers (Study Unify — Student App).",
-      "Integrated REST APIs using HTTP, GetX state management, and SQLite local storage.",
-      "Worked on the Flutter administration application supporting the Study Unify platform using GetX (Study Unify Admin).",
-      "Published and maintained applications on Google Play Store.",
+    category: "Data",
+    skills: ["SQLite", "Firebase", "MongoDB"],
+  },
+  {
+    category: "Other Languages",
+    skills: ["Python", "PHP", "Java"],
+  },
+  {
+    category: "Tools",
+    skills: [
+      "Git",
+      "Debugging",
+      "Performance optimization",
+      "Claude Code",
+      "OpenAI Codex",
+      "Google Antigravity",
     ],
-    keyProjects: [
-      "Study Unify — Student App (Google Play)",
-      "Study Unify Admin (Google Play)",
-    ],
-    technologies: ["Flutter", "Dart", "HTTP REST APIs", "GetX", "SQLite", "Google Play"],
   },
 ];
 
@@ -334,86 +409,11 @@ export const EDUCATION = [
     institution: "Gujarat Technological University (GTU)",
     college: "GMIT",
     year: "2024",
-    passingYearText: "Passing Year: 2024",
   },
   {
     degree: "Bachelor of Computer Applications (BCA)",
     institution: "Maharaja Krishnakumarsinhji Bhavnagar University (MKBU)",
     college: "Shree Swaminarayan College of Computer Science",
     year: "2022",
-    passingYearText: "Passing Year: 2022",
-  },
-];
-
-export const TECHNICAL_SKILLS = [
-  {
-    category: "Mobile App Development",
-    icon: "Smartphone",
-    skills: [
-      { name: "Flutter", level: "Core / Production", highlighted: true },
-      { name: "Android", level: "Production", highlighted: true },
-      { name: "iOS", level: "Production", highlighted: true },
-      { name: "Cross-Platform Development", level: "Core", highlighted: true },
-      { name: "Responsive UI", level: "Production" },
-    ],
-  },
-  {
-    category: "Programming Languages",
-    icon: "Terminal",
-    skills: [
-      { name: "Dart", level: "Core / Production", highlighted: true },
-      { name: "Python", level: "Familiar" },
-      { name: "PHP", level: "Familiar" },
-      { name: "Java", level: "Familiar" },
-    ],
-  },
-  {
-    category: "State Management & Architecture",
-    icon: "Layers",
-    skills: [
-      { name: "GetX", level: "Production", highlighted: true },
-      { name: "MobX", level: "Production", highlighted: true },
-      { name: "MVVM Architecture", level: "Core Pattern", highlighted: true },
-    ],
-  },
-  {
-    category: "API & Integrations",
-    icon: "CreditCard",
-    skills: [
-      { name: "REST API & HTTP", level: "Production", highlighted: true },
-      { name: "JSON Parsing", level: "Production" },
-      { name: "WebSockets", level: "Production", highlighted: true },
-      { name: "Stripe Payment Gateway", level: "Integrated", highlighted: true },
-      { name: "NMI Payment Gateway", level: "Integrated", highlighted: true },
-    ],
-  },
-  {
-    category: "Database, Local Storage & Cloud",
-    icon: "Database",
-    skills: [
-      { name: "SQLite", level: "Production", highlighted: true },
-      { name: "Firebase", level: "Production", highlighted: true },
-      { name: "Firebase Cloud Messaging (FCM)", level: "Production" },
-      { name: "Push Notifications", level: "Production" },
-    ],
-  },
-  {
-    category: "AI-Assisted Development Tools",
-    icon: "Bot",
-    skills: [
-      { name: "OpenAI Codex", level: "Workflow Support", highlighted: true },
-      { name: "Claude Code", level: "Workflow Support", highlighted: true },
-      { name: "Google Antigravity", level: "Workflow Support", highlighted: true },
-    ],
-  },
-  {
-    category: "Development Tools & Practices",
-    icon: "Cpu",
-    skills: [
-      { name: "Git & Version Control", level: "Daily Use", highlighted: true },
-      { name: "Debugging & Troubleshooting", level: "Core Practice", highlighted: true },
-      { name: "Application Maintenance", level: "Core Practice" },
-      { name: "Performance Optimization", level: "Core Practice" },
-    ],
   },
 ];

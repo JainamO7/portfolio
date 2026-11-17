@@ -17,13 +17,14 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #54C5F8 0%, #0175C2 100%)",
-          borderRadius: "44px",
-          color: "#ffffff",
-          fontSize: "92px",
-          fontWeight: 900,
-          fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-          letterSpacing: "-4px",
+          backgroundColor: "#1C1917",
+          border: "4px solid #292524",
+          borderRadius: "36px",
+          color: "#F59E0B",
+          fontSize: "84px",
+          fontWeight: 700,
+          fontFamily: "serif",
+          letterSpacing: "-3px",
         }}
       >
         JK

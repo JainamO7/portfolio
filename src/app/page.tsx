@@ -1,22 +1,22 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import DeviceShowroom from "@/components/DeviceShowroom";
-import ArchitectureSection from "@/components/ArchitectureSection";
+import SelectedWork from "@/components/SelectedWork";
 import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
+import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div className="min-h-screen flex flex-col bg-[var(--color-canvas)] overflow-x-hidden w-full">
       <Navbar />
-      <main style={{ flex: 1 }}>
+      <main className="flex-1">
         <Hero />
-        <DeviceShowroom />
-        <ArchitectureSection />
+        <SelectedWork />
         <ExperienceSection />
         <SkillsSection />
+        <AboutSection />
         <ContactSection />
       </main>
       <Footer />
