@@ -10,16 +10,14 @@ export default function SelectedWork() {
     <section id="work" className="py-20 border-b border-[var(--color-border)]">
       <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14">
-          <div>
-            <p className="text-xs font-mono uppercase tracking-wider text-[var(--color-accent)] mb-2">
-              Selected Work
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[var(--color-text-primary)]">
-              Cross-platform mobile applications.
-            </h2>
-          </div>
-          <p className="text-sm text-[var(--color-text-muted)] max-w-md">
+        <div className="mb-14 max-w-2xl">
+          <p className="text-xs font-mono uppercase tracking-wider text-[var(--color-accent)] mb-2">
+            Selected Work
+          </p>
+          <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[var(--color-text-primary)]">
+            Cross-platform mobile applications.
+          </h2>
+          <p className="mt-3 text-base text-[var(--color-text-muted)] leading-relaxed">
             Production apps built with Flutter for Android and iOS. Real screenshots from production builds and client deployments.
           </p>
         </div>
@@ -28,7 +26,7 @@ export default function SelectedWork() {
         <div className="mb-20 space-y-8">
           <div className="flex items-center gap-2 pb-3 border-b border-[var(--color-border)] text-xs font-mono uppercase tracking-wider text-[var(--color-text-muted)]">
             <Shield className="w-3.5 h-3.5 text-[var(--color-accent)]" />
-            <span>Production Applications & Client Deployments (Live App Screenshots)</span>
+            <span>Production Deployments & Client Work</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -121,7 +119,7 @@ export default function SelectedWork() {
         <div className="space-y-8">
           <div className="flex items-center gap-2 pb-3 border-b border-[var(--color-border)] text-xs font-mono uppercase tracking-wider text-[var(--color-text-muted)]">
             <BookOpen className="w-3.5 h-3.5 text-[var(--color-accent)]" />
-            <span>Technical Case Studies (In-Depth Architecture & Features)</span>
+            <span>Technical Case Studies</span>
           </div>
 
           {/* Featured Case Study (Large Card) */}
