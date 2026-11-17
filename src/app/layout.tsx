@@ -70,12 +70,15 @@ const themeScript = `
     try {
       var saved = localStorage.getItem('theme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (saved === 'dark' || (!saved && prefersDark)) {
+      var isDark = saved === 'dark' || ((!saved || saved === 'system') && prefersDark);
+      if (isDark) {
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
+        document.documentElement.style.colorScheme = 'dark';
       } else {
         document.documentElement.classList.add('light');
         document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
       }
     } catch (e) {}
   })();
@@ -90,6 +93,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      style={{ colorScheme: "light dark" }}
       className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <head>

@@ -17,6 +17,23 @@
   --color-accent-subtle: #fef3c7;
 }
 
+/* Zero-flash pure CSS media query: when user prefers dark and html has no .light class */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --color-canvas: #121110;
+    --color-surface: #1c1917;
+    --color-surface-hover: #262422;
+    --color-border: #2e2a27;
+    --color-border-subtle: #22201e;
+    --color-text-primary: #f5f5f4;
+    --color-text-muted: #a8a29e;
+    --color-text-subtle: #78716c;
+    --color-accent: #f59e0b;
+    --color-accent-hover: #fbbf24;
+    --color-accent-subtle: #451a03;
+  }
+}
+
 html.dark {
   /* Warm Stone & Amber (Dark) */
   --color-canvas: #121110;
@@ -32,20 +49,19 @@ html.dark {
   --color-accent-subtle: #451a03;
 }
 
-@media (prefers-color-scheme: dark) {
-  html:not(.light) {
-    --color-canvas: #121110;
-    --color-surface: #1c1917;
-    --color-surface-hover: #262422;
-    --color-border: #2e2a27;
-    --color-border-subtle: #22201e;
-    --color-text-primary: #f5f5f4;
-    --color-text-muted: #a8a29e;
-    --color-text-subtle: #78716c;
-    --color-accent: #f59e0b;
-    --color-accent-hover: #fbbf24;
-    --color-accent-subtle: #451a03;
-  }
+html.light {
+  /* Warm Stone & Amber (Light) */
+  --color-canvas: #fbfbfa;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f5f5f3;
+  --color-border: #e7e5e4;
+  --color-border-subtle: #f0efeb;
+  --color-text-primary: #1c1917;
+  --color-text-muted: #78716c;
+  --color-text-subtle: #a8a29e;
+  --color-accent: #b45309;
+  --color-accent-hover: #92400e;
+  --color-accent-subtle: #fef3c7;
 }
 
 * {

@@ -32,12 +32,15 @@ export default function ThemeToggle() {
       const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       root.classList.toggle("dark", isDark);
       root.classList.toggle("light", !isDark);
+      root.style.colorScheme = isDark ? "dark" : "light";
     } else if (nextTheme === "dark") {
       root.classList.add("dark");
       root.classList.remove("light");
+      root.style.colorScheme = "dark";
     } else {
       root.classList.add("light");
       root.classList.remove("dark");
+      root.style.colorScheme = "light";
     }
   };
 
@@ -52,9 +55,10 @@ export default function ThemeToggle() {
     return (
       <button
         aria-label="Toggle theme"
-        className="w-9 h-9 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] flex items-center justify-center text-[var(--color-text-muted)]"
+        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)]"
       >
-        <span className="w-4 h-4" />
+        <span className="w-3.5 h-3.5 rounded-full bg-[var(--color-border)]" />
+        <span className="capitalize">Theme</span>
       </button>
     );
   }
